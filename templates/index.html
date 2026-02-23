@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}Agent Registry - Zentinel{% endblock %}
+{% block description %}Browse and discover {{ section.pages | length }} agents for the Zentinel reverse proxy. Security, API protection, scripting, protocol handlers, and more.{% endblock %}
+{% block og_title %}Zentinel Agent Registry{% endblock %}
+{% block og_description %}Browse and discover {{ section.pages | length }} agents for the Zentinel reverse proxy.{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h1><span class="gradient-text">Agent Registry</span></h1>
+        <p>{{ section.pages | length }} agents to extend Zentinel with security, API protection, scripting, and more.</p>
+    </div>
+
+    <section class="registry-section" aria-label="Agent catalog">
+        <div class="category-filter" role="group" aria-label="Filter agents by category">
+            <button class="filter-btn active" data-category="all" onclick="filterAgents('all', this)">All</button>
+            <button class="filter-btn" data-category="core" onclick="filterAgents('core', this)">Core</button>
+            <button class="filter-btn" data-category="security" onclick="filterAgents('security', this)">Security</button>
+            <button class="filter-btn" data-category="api-security" onclick="filterAgents('api-security', this)">API Security</button>
+            <button class="filter-btn" data-category="protocol" onclick="filterAgents('protocol', this)">Protocol</button>
+            <button class="filter-btn" data-category="scripting" onclick="filterAgents('scripting', this)">Scripting</button>
+            <button class="filter-btn" data-category="utility" onclick="filterAgents('utility', this)">Utility</button>
+            <button class="filter-btn" data-category="identity" onclick="filterAgents('identity', this)">Identity</button>
+        </div>
+
+        <div class="agents-grid" id="agentsGrid">
+            {% set pages = section.pages | sort(attribute="extra.name") %}
+            {% for page in pages %}
+            <article class="agent-card" data-category="{{ page.extra.category }}">
+                <div class="agent-header">
+                    <div class="agent-info">
+                        <h2 class="agent-name">
+                            <a href="{{ page.permalink | safe }}">{{ page.extra.name }}</a>
+                        </h2>
+                    </div>
+                    <div class="agent-header-right">
+                        <span class="agent-version">v{{ page.extra.version }}</span>
+                        <span class="agent-status {{ page.extra.status }}">{{ page.extra.status }}</span>
+                    </div>
+                </div>
+                <p class="agent-description">{{ page.extra.description }}</p>
+                <div class="agent-meta">
+                    <span class="agent-category-tag">{{ page.extra.category }}</span>
+                    {% if page.extra.bundle_included %}
+                    <span class="agent-bundle-badge">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                        bundled
+                    </span>
+                    {% endif %}
+                    {% if page.extra.language and page.extra.language != "Rust" %}
+                    <span class="agent-lang-badge">{{ page.extra.language }}</span>
+                    {% endif %}
+                </div>
+            </article>
+            {% endfor %}
+            <div class="no-results" id="noResults">
+                <p>No agents found in this category.</p>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function filterAgents(category, btn) {
+        const cards = document.querySelectorAll('.agent-card');
+        const noResults = document.getElementById('noResults');
+        let visible = 0;
+
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        cards.forEach(card => {
+            if (category === 'all' || card.dataset.category === category) {
+                card.style.display = '';
+                visible++;
+            } else {
+                card.style.display = 'none';
+            }
+        });
+
+        noResults.classList.toggle('visible', visible === 0);
+    }
+</script>
+{% endblock %}

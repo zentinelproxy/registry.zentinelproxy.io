@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: https://ogp.me/ns#" data-theme="auto">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark light">
+
+    <title>{% block title %}{{ config.title }}{% endblock %}</title>
+    <meta name="description" content="{% block description %}{{ config.description }}{% endblock %}">
+    <meta name="keywords" content="zentinel, agents, reverse proxy, security, waf, registry, plugins">
+    <meta name="author" content="{{ config.extra.author }}">
+
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+
+    {% if current_url %}
+    <link rel="canonical" href="{{ current_url | safe }}">
+    {% else %}
+    <link rel="canonical" href="{{ config.base_url | safe }}">
+    {% endif %}
+
+    <meta property="og:type" content="{% if page %}article{% else %}website{% endif %}">
+    <meta property="og:url" content="{{ current_url | default(value=config.base_url) | safe }}">
+    <meta property="og:title" content="{% block og_title %}{{ config.title }}{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}{{ config.description }}{% endblock %}">
+    <meta property="og:site_name" content="Zentinel">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{% block twitter_title %}{{ config.title }}{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}{{ config.description }}{% endblock %}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ get_url(path='style.css') | safe }}">
+
+    <script>
+        (function() {
+            const stored = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = stored || (prefersDark ? 'dark' : 'light');
+            document.documentElement.dataset.theme = theme;
+        })();
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebSite",
+                "@id": "{{ config.base_url | safe }}/#website",
+                "url": "{{ config.base_url | safe }}",
+                "name": "{{ config.title }}",
+                "description": "{{ config.description }}",
+                "isPartOf": {
+                    "@type": "WebSite",
+                    "url": "https://zentinelproxy.io"
+                },
+                "inLanguage": "en"
+            },
+            {
+                "@type": "WebPage",
+                "@id": "{{ current_url | default(value=config.base_url) | safe }}/#webpage",
+                "url": "{{ current_url | default(value=config.base_url) | safe }}",
+                "name": "{% block jsonld_title %}{{ config.title }}{% endblock %}",
+                "description": "{% block jsonld_description %}{{ config.description }}{% endblock %}",
+                "isPartOf": {
+                    "@id": "{{ config.base_url | safe }}/#website"
+                },
+                "inLanguage": "en"
+            }
+        ]
+    }
+    </script>
+
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <div class="layout">
+        <header class="header" role="banner">
+            <div class="container">
+                <nav class="nav" role="navigation" aria-label="Main navigation">
+                    <a href="https://zentinelproxy.io/" class="logo" aria-label="Zentinel Home">
+                        <img src="https://zentinelproxy.io/img/zentinel-mascot.avif" alt="Zentinel" class="logo-img">
+                        <span class="logo-text">Zentinel</span>
+                        <span class="logo-separator">/</span>
+                        <span class="logo-subtext">Registry</span>
+                    </a>
+                    <div class="nav-links">
+                        <a href="https://zentinelproxy.io/features/">Features</a>
+                        <a href="https://docs.zentinelproxy.io/">Docs</a>
+                        <a href="https://zentinelproxy.io/blog/">Blog</a>
+                        <a href="{{ config.extra.github }}" target="_blank" rel="noopener" class="nav-icon-link" aria-label="GitHub repository">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+                        </a>
+                        {% if config.extra.discord %}
+                        <a href="{{ config.extra.discord }}" target="_blank" rel="noopener" class="nav-icon-link" aria-label="Discord server">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18.59 5.89a16.55 16.55 0 0 0-4.07-1.26.06.06 0 0 0-.07.03c-.18.31-.38.72-.52 1.05a15.3 15.3 0 0 0-4.57 0 10.7 10.7 0 0 0-.53-1.05.06.06 0 0 0-.07-.03 16.5 16.5 0 0 0-4.07 1.26.06.06 0 0 0-.03.02C2.4 9.36 1.63 12.7 2.01 16a.07.07 0 0 0 .03.05 16.6 16.6 0 0 0 5 2.53.06.06 0 0 0 .07-.02c.39-.53.73-1.09 1.03-1.67a.06.06 0 0 0-.03-.09 10.9 10.9 0 0 1-1.57-.75.06.06 0 0 1-.01-.1c.11-.08.21-.16.31-.25a.06.06 0 0 1 .06-.01c3.3 1.5 6.87 1.5 10.13 0a.06.06 0 0 1 .07.01c.1.09.21.17.31.25a.06.06 0 0 1 0 .1c-.5.29-1.02.54-1.57.75a.06.06 0 0 0-.04.09c.3.58.65 1.14 1.03 1.67a.06.06 0 0 0 .07.02 16.56 16.56 0 0 0 5.01-2.53.06.06 0 0 0 .03-.05c.44-4.54-.74-8.49-3.12-11.99a.05.05 0 0 0-.02-.02zM9.02 14.09c-1.04 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12 0 1.17-.84 2.12-1.89 2.12zm6.97 0c-1.04 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12 0 1.17-.83 2.12-1.89 2.12z"/></svg>
+                        </a>
+                        {% endif %}
+                        <button class="theme-toggle" aria-label="Toggle theme" aria-live="polite" onclick="toggleTheme()">
+                            <svg class="icon-sun" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+                            <svg class="icon-moon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                            <span class="sr-only" id="theme-status">Theme: auto</span>
+                        </button>
+                    </div>
+                    <button class="mobile-menu-btn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileMenu" onclick="toggleMobileMenu()">
+                        <svg class="icon-menu" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                        <svg class="icon-close" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </button>
+                </nav>
+            </div>
+        </header>
+
+        <div class="mobile-menu-overlay" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Navigation menu" aria-hidden="true">
+            <button class="mobile-menu-close" aria-label="Close navigation menu" onclick="closeMobileMenu()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+            <nav class="mobile-menu-content" role="navigation" aria-label="Mobile navigation">
+                <a href="/" class="mobile-menu-link">Registry</a>
+                <a href="https://zentinelproxy.io/features/" class="mobile-menu-link">Features</a>
+                <a href="https://docs.zentinelproxy.io/" class="mobile-menu-link">Docs</a>
+                <a href="https://zentinelproxy.io/blog/" class="mobile-menu-link">Blog</a>
+                <a href="{{ config.extra.github }}" class="mobile-menu-link mobile-menu-link--icon" target="_blank" rel="noopener">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+                    GitHub
+                </a>
+                <button class="mobile-theme-toggle" aria-label="Toggle theme" onclick="toggleTheme()">
+                    <svg class="icon-sun" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+                    <svg class="icon-moon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                    <span>Toggle Theme</span>
+                </button>
+            </nav>
+        </div>
+
+        <main id="main-content" class="main" role="main" aria-label="Main content">
+            {% block content %}{% endblock %}
+        </main>
+
+        <footer class="footer" role="contentinfo">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-brand">
+                        <div class="footer-mascot-wrapper" aria-hidden="true">
+                            <div class="footer-mascot-glow"></div>
+                            <img src="https://zentinelproxy.io/img/zentinel-mascot.avif" alt="" class="footer-mascot">
+                        </div>
+                        <div class="footer-tagline">
+                            <p class="footer-title">Security-first reverse proxy<br>built to guard the free web</p>
+                            <p class="footer-description">A high-performance, security-focused reverse proxy built on Cloudflare's Pingora framework. Sleepable ops at the edge with extensible agent architecture.</p>
+                        </div>
+                    </div>
+                    <nav class="footer-links" role="navigation" aria-label="Footer navigation">
+                        <div class="footer-col">
+                            <h4>Product</h4>
+                            <a href="https://zentinelproxy.io/features/">Features</a>
+                            <a href="/">Agent Registry</a>
+                            <a href="https://zentinelproxy.io/playground/">Playground</a>
+                            <a href="https://zentinelproxy.io/customize/">Install</a>
+                        </div>
+                        <div class="footer-col">
+                            <h4>Learn</h4>
+                            <a href="https://docs.zentinelproxy.io/">Documentation</a>
+                            <a href="https://docs.zentinelproxy.io/getting-started/">Getting Started</a>
+                            <a href="https://docs.zentinelproxy.io/configuration/">Configuration</a>
+                            <a href="https://docs.zentinelproxy.io/examples/">Examples</a>
+                        </div>
+                        <div class="footer-col">
+                            <h4>About</h4>
+                            <a href="https://zentinelproxy.io/manifesto/">Manifesto</a>
+                            <a href="https://zentinelproxy.io/supply-chain/">Supply Chain</a>
+                            <a href="https://zentinelproxy.io/benchmarks/">Benchmarks</a>
+                            <a href="https://zentinelproxy.io/blog/">Blog</a>
+                        </div>
+                        <div class="footer-col">
+                            <h4>Community</h4>
+                            <a href="{{ config.extra.github }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+                                GitHub
+                            </a>
+                            <a href="{{ config.extra.github }}/issues">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg>
+                                Issues
+                            </a>
+                            <a href="{{ config.extra.github }}/discussions">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 10h.01"/><path d="M12 10h.01"/><path d="M16 10h.01"/></svg>
+                                Discussions
+                            </a>
+                            {% if config.extra.discord %}
+                            <a href="{{ config.extra.discord }}" target="_blank" rel="noopener">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18.59 5.89a16.55 16.55 0 0 0-4.07-1.26.06.06 0 0 0-.07.03c-.18.31-.38.72-.52 1.05a15.3 15.3 0 0 0-4.57 0 10.7 10.7 0 0 0-.53-1.05.06.06 0 0 0-.07-.03 16.5 16.5 0 0 0-4.07 1.26.06.06 0 0 0-.03.02C2.4 9.36 1.63 12.7 2.01 16a.07.07 0 0 0 .03.05 16.6 16.6 0 0 0 5 2.53.06.06 0 0 0 .07-.02c.39-.53.73-1.09 1.03-1.67a.06.06 0 0 0-.03-.09 10.9 10.9 0 0 1-1.57-.75.06.06 0 0 1-.01-.1c.11-.08.21-.16.31-.25a.06.06 0 0 1 .06-.01c3.3 1.5 6.87 1.5 10.13 0a.06.06 0 0 1 .07.01c.1.09.21.17.31.25a.06.06 0 0 1 0 .1c-.5.29-1.02.54-1.57.75a.06.06 0 0 0-.04.09c.3.58.65 1.14 1.03 1.67a.06.06 0 0 0 .07.02 16.56 16.56 0 0 0 5.01-2.53.06.06 0 0 0 .03-.05c.44-4.54-.74-8.49-3.12-11.99a.05.05 0 0 0-.02-.02zM9.02 14.09c-1.04 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12 0 1.17-.84 2.12-1.89 2.12zm6.97 0c-1.04 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12 0 1.17-.83 2.12-1.89 2.12z"/></svg>
+                                Discord
+                            </a>
+                            {% endif %}
+                        </div>
+                    </nav>
+                </div>
+                <div class="footer-bottom">
+                    <p>Zentinel is licensed under <a href="https://github.com/zentinelproxy/zentinel/blob/main/LICENSE" target="_blank" rel="noopener">Apache 2.0</a>. Website &copy; {{ now() | date(format='%Y') }} <a href="https://raskell.io">raskell.io</a>.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const current = html.dataset.theme;
+            const next = current === 'dark' ? 'light' : 'dark';
+            html.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            const statusEl = document.getElementById('theme-status');
+            if (statusEl) {
+                statusEl.textContent = 'Theme: ' + next;
+            }
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const btn = document.querySelector('.mobile-menu-btn');
+            const isOpen = menu.classList.toggle('open');
+            btn.classList.toggle('open', isOpen);
+            btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            menu.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+            document.body.style.overflow = isOpen ? 'hidden' : '';
+            if (isOpen) {
+                const firstLink = menu.querySelector('.mobile-menu-link');
+                if (firstLink) firstLink.focus();
+            }
+        }
+
+        function closeMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const btn = document.querySelector('.mobile-menu-btn');
+            menu.classList.remove('open');
+            btn.classList.remove('open');
+            btn.setAttribute('aria-expanded', 'false');
+            menu.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        }
+
+        document.querySelectorAll('.mobile-menu-link').forEach(link => {
+            link.addEventListener('click', closeMobileMenu);
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeMobileMenu();
+            }
+        });
+    </script>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

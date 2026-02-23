@@ -1,0 +1,40 @@
+# Zentinel Agent Registry - robots.txt
+# https://registry.zentinelproxy.io
+
+User-agent: *
+Allow: /
+
+Sitemap: https://registry.zentinelproxy.io/sitemap.xml
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Anthropic-AI
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: GPTBot
+Crawl-delay: 2
+
+User-agent: ClaudeBot
+Crawl-delay: 2
+
+User-agent: PerplexityBot
+Crawl-delay: 2

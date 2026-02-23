@@ -1,0 +1,21 @@
+base_url = "https://registry.zentinelproxy.io"
+title = "Zentinel Agent Registry"
+description = "Browse, discover, and install agents for the Zentinel reverse proxy. 26 agents for security, API protection, scripting, and more."
+default_language = "en"
+
+compile_sass = true
+generate_feeds = false
+build_search_index = false
+minify_html = true
+
+[markdown]
+smart_punctuation = true
+external_links_target_blank = true
+external_links_no_follow = true
+external_links_no_referrer = true
+
+[extra]
+author = "raskell.io"
+github = "https://github.com/zentinelproxy/zentinel"
+discord = "https://discord.gg/jN57RsT2"
+software_version = "26.02"
