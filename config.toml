@@ -14,6 +14,11 @@ external_links_target_blank = true
 external_links_no_follow = true
 external_links_no_referrer = true
 
+[markdown.highlighting]
+style = "class"
+dark_theme = "github-dark"
+light_theme = "github-light"
+
 [extra]
 author = "raskell.io"
 github = "https://github.com/zentinelproxy/zentinel"
