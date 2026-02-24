@@ -5,6 +5,91 @@
 {% block og_title %}{{ page.extra.name }} - Zentinel Agent Registry{% endblock %}
 {% block og_description %}{{ page.extra.description }}{% endblock %}
 
+{% block head %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+<style>
+    /* Syntax highlighting colors (Catppuccin Mocha) */
+    :root {
+        --sh-bg: #1e1e2e;
+        --sh-text: #cdd6f4;
+        --sh-muted: #6c7086;
+        --sh-green: #a6e3a1;
+        --sh-mauve: #cba6f7;
+        --sh-blue: #89b4fa;
+        --sh-yellow: #f9e2af;
+        --sh-peach: #fab387;
+        --sh-sky: #89dceb;
+        --sh-lavender: #b4befe;
+        --sh-red: #f38ba8;
+        --sh-pink: #f5c2e7;
+        --sh-teal: #94e2d5;
+        --sh-border: #313244;
+    }
+    [data-theme="light"] {
+        --sh-bg: #eff1f5;
+        --sh-text: #4c4f69;
+        --sh-muted: #9ca0b0;
+        --sh-green: #40a02b;
+        --sh-mauve: #8839ef;
+        --sh-blue: #1e66f5;
+        --sh-yellow: #df8e1d;
+        --sh-peach: #fe640b;
+        --sh-sky: #04a5e5;
+        --sh-lavender: #7287fd;
+        --sh-red: #d20f39;
+        --sh-pink: #ea76cb;
+        --sh-teal: #179299;
+        --sh-border: #ccd0da;
+    }
+    /* Override Prism theme */
+    code[class*="language-"],
+    pre[class*="language-"] {
+        background: var(--sh-bg) !important;
+        color: var(--sh-text) !important;
+        text-shadow: none !important;
+        font-family: 'Geist Mono', ui-monospace, monospace !important;
+        font-size: 0.875rem !important;
+        line-height: 1.6 !important;
+    }
+    pre[class*="language-"] {
+        padding: 1.25rem !important;
+        border-radius: 8px !important;
+        border: 1px solid var(--sh-border) !important;
+        overflow-x: auto !important;
+    }
+    .token.comment,
+    .token.prolog,
+    .token.doctype,
+    .token.cdata { color: var(--sh-muted) !important; font-style: italic; }
+    .token.string,
+    .token.char,
+    .token.attr-value { color: var(--sh-green) !important; }
+    .token.keyword,
+    .token.control,
+    .token.directive,
+    .token.unit { color: var(--sh-mauve) !important; }
+    .token.function,
+    .token.function-name { color: var(--sh-blue) !important; }
+    .token.class-name,
+    .token.type-class-name,
+    .token.builtin { color: var(--sh-yellow) !important; }
+    .token.number,
+    .token.boolean { color: var(--sh-peach) !important; }
+    .token.operator,
+    .token.arrow { color: var(--sh-sky) !important; }
+    .token.punctuation { color: var(--sh-muted) !important; }
+    .token.property,
+    .token.node { color: var(--sh-lavender) !important; }
+    .token.attr-name,
+    .token.variable,
+    .token.parameter { color: var(--sh-red) !important; }
+    .token.symbol,
+    .token.atom { color: var(--sh-pink) !important; }
+    .token.module,
+    .token.namespace { color: var(--sh-teal) !important; }
+</style>
+{% endblock %}
+
 {% block content %}
 <div class="container">
     <nav class="breadcrumb" aria-label="Breadcrumb">
@@ -123,4 +208,56 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<!-- Prism.js for syntax highlighting -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-rust.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-go.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-toml.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-yaml.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-http.min.js"></script>
+<script>
+(function() {
+    // Convert Zola's data-lang attributes to Prism's class="language-*" convention
+    document.querySelectorAll('code[data-lang]').forEach(function(code) {
+        var lang = code.getAttribute('data-lang');
+        code.classList.add('language-' + lang);
+        var pre = code.parentElement;
+        if (pre && pre.tagName === 'PRE') {
+            pre.classList.add('language-' + lang);
+        }
+    });
+
+    // Define KDL language for Prism (Zentinel config format)
+    Prism.languages.kdl = {
+        'comment': {
+            pattern: /\/\/.*|\/\*[\s\S]*?\*\/|#.*/,
+            greedy: true
+        },
+        'string': {
+            pattern: /"(?:[^"\\]|\\.)*"/,
+            greedy: true
+        },
+        'keyword': /\b(?:true|false|null)\b/,
+        'number': /\b-?(?:0x[\da-fA-F]+|\d+(?:\.\d+)?(?:[eE][+-]?\d+)?)\b/,
+        'attr-name': /[a-zA-Z_][\w-]*(?=\s*=)/,
+        'property': /\b(?:type|path|events|timeout-ms|failure-mode|agent|matches|upstream|filters|unix-socket)\b/,
+        'node': {
+            pattern: /\b(?:agents|agent|filters|filter|routes|route|upstreams|upstream|listeners|listener)\b/,
+            alias: 'class-name'
+        },
+        'function': /[a-zA-Z_][\w-]*(?=\s*\{)/,
+        'operator': /[=]/,
+        'punctuation': /[{}]/
+    };
+
+    Prism.highlightAll();
+})();
+</script>
 {% endblock %}
