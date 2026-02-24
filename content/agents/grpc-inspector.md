@@ -1,7 +1,9 @@
 +++
-title = "grpc-inspector"
+title = "gRPC Inspector"
+weight = 130
 template = "agent.html"
 path = "grpc-inspector"
+description = "Comprehensive security controls for gRPC services: method authorization, rate limiting, metadata inspection, and reflection control."
 
 [extra]
 name = "grpc-inspector"
@@ -16,6 +18,10 @@ category = "api-security"
 tags = ["grpc", "security", "authorization", "rate-limiting"]
 protocol_version = "v2"
 min_zentinel_version = "26.01.0"
+official = true
+author_url = "https://github.com/zentinelproxy"
+homepage = "https://zentinelproxy.io/agents/grpc-inspector/"
+crate_name = "zentinel-agent-grpc-inspector"
 bundle_included = true
 bundle_group = "API security agents"
 language = "Rust"
@@ -216,8 +222,8 @@ zentinel-agent-grpc-inspector [OPTIONS]
 
 Options:
   -c, --config <FILE>       Path to configuration file [default: grpc-inspector.yaml]
-  -s, --socket <PATH>       Unix socket path
-  -g, --grpc-address <ADDR> gRPC listen address (e.g., 0.0.0.0:50051)
+  -s, --socket <PATH>       Unix socket path (gRPC transport recommended instead)
+  -g, --grpc-address <ADDR> gRPC listen address (recommended)
   -L, --log-level <LEVEL>   Log level [default: info]
       --print-config      Print example configuration and exit
       --validate          Validate configuration and exit
@@ -229,12 +235,13 @@ Options:
 
 Add the agent to your Zentinel proxy configuration:
 
-```yaml
-agents:
-  - name: grpc-inspector
-    socket: /tmp/zentinel-grpc-inspector.sock
-    on_request: true
-    on_response: false
+```kdl
+agent "grpc-inspector" type="custom" {
+    grpc "http://127.0.0.1:50051"
+    events "request_headers" "request_body"
+    timeout-ms 100
+    failure-mode "open"
+}
 ```
 
 ### Full Configuration Example

@@ -1,7 +1,9 @@
 +++
-title = "soap"
+title = "SOAP Security"
+weight = 170
 template = "agent.html"
 path = "soap"
+description = "SOAP-specific security controls including envelope validation, WS-Security verification, operation control, and XXE prevention."
 
 [extra]
 name = "soap"
@@ -16,6 +18,10 @@ category = "api-security"
 tags = ["security", "soap", "xml", "api"]
 protocol_version = "v2"
 min_zentinel_version = "26.01.0"
+official = true
+author_url = "https://github.com/zentinelproxy"
+homepage = "https://zentinelproxy.io/agents/soap/"
+crate_name = "zentinel-agent-soap"
 bundle_included = true
 bundle_group = "API security agents"
 language = "Rust"
@@ -28,7 +34,7 @@ As of v0.2.0, the SOAP Security agent supports protocol v2 with:
 - **Capability negotiation**: Reports supported features during handshake
 - **Health reporting**: Exposes health status for monitoring
 - **Metrics export**: Counter metrics for requests validated/blocked per violation type
-- **gRPC transport**: Optional high-performance gRPC transport via `--grpc-address`
+- **gRPC transport**: Recommended high-performance gRPC transport via `--grpc-address` (UDS not yet implemented for v2)
 - **Lifecycle hooks**: Graceful shutdown and drain handling
 
 ## Overview
@@ -81,7 +87,7 @@ cargo build --release
 ### Command Line
 
 ```bash
-zentinel-agent-soap --config config.yaml --socket /var/run/zentinel/soap.sock
+zentinel-agent-soap --config config.yaml --grpc-address 127.0.0.1:50051
 ```
 
 ### Command Line Options
@@ -89,8 +95,8 @@ zentinel-agent-soap --config config.yaml --socket /var/run/zentinel/soap.sock
 | Option | Description | Default |
 |--------|-------------|---------|
 | `--config`, `-c` | Path to YAML configuration file | `config.yaml` |
-| `--socket`, `-s` | Unix socket path | `/tmp/zentinel-soap.sock` |
-| `--grpc-address` | gRPC listen address (e.g., `0.0.0.0:50051`) | - |
+| `--socket`, `-s` | Unix socket path (not yet implemented for v2, use `--grpc-address`) | `/tmp/zentinel-soap.sock` |
+| `--grpc-address` | gRPC listen address (recommended) | - |
 | `--log-level`, `-l` | Log level (trace, debug, info, warn, error) | `info` |
 
 ### Configuration File (YAML)
@@ -156,15 +162,16 @@ body_validation:
 ### Zentinel Configuration
 
 ```kdl
-agent "soap" {
-    socket "/var/run/zentinel/soap.sock"
-    timeout 100ms
-    events ["request_headers" "request_body"]
+agent "soap" type="custom" {
+    grpc "http://127.0.0.1:50051"
+    timeout-ms 100
+    events "request_headers" "request_body"
+    failure-mode "open"
 }
 
 route {
     match { path "/ws/*" }
-    agents ["soap"]
+    agents "soap"
     upstream "soap-backend"
 }
 ```
