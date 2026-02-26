@@ -341,7 +341,7 @@ zentinel-ai-gateway-agent \
 
 ```rust
 use zentinel_agent_ai_gateway::{AiGatewayAgent, AiGatewayConfig, PiiAction};
-use zentinel_agent_protocol::AgentServer;
+use zentinel_agent_protocol::v2::UdsAgentServerV2;
 
 let config = AiGatewayConfig {
     // Input guardrails
@@ -359,7 +359,7 @@ let config = AiGatewayConfig {
 };
 
 let agent = AiGatewayAgent::new(config);
-let server = AgentServer::new("ai-gateway", "/tmp/ai.sock", Box::new(agent));
+let server = UdsAgentServerV2::new("ai-gateway", "/tmp/ai.sock", Box::new(agent));
 server.run().await?;
 ```
 
