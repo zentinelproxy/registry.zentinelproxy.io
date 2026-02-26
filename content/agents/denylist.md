@@ -1,7 +1,9 @@
 +++
-title = "denylist"
+title = "Denylist"
+weight = 200
 template = "agent.html"
 path = "denylist"
+description = "Block requests based on IP addresses, CIDR ranges, or custom patterns with real-time updates."
 
 [extra]
 name = "denylist"
@@ -14,8 +16,11 @@ license = "Apache-2.0"
 status = "stable"
 category = "core"
 tags = ["security", "filtering", "core"]
-protocol_version = "v2"
 min_zentinel_version = "25.12.0"
+official = true
+author_url = "https://github.com/zentinelproxy"
+homepage = "https://zentinelproxy.io/agents/denylist/"
+crate_name = "zentinel-agent-denylist"
 bundle_included = true
 bundle_group = "Core agents"
 language = "Rust"
@@ -96,7 +101,7 @@ Add the agent to your Zentinel configuration:
 agent "denylist" {
     socket "/var/run/zentinel/denylist.sock"
     timeout 50ms
-    fail-open false
+    fail-open #false
 
     config {
         file "/etc/zentinel/denylist.txt"

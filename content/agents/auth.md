@@ -16,7 +16,6 @@ license = "Apache-2.0"
 status = "stable"
 category = "identity"
 tags = ["auth", "jwt", "oauth", "rbac", "api-key", "identity"]
-protocol_version = "v2"
 min_zentinel_version = "26.01.0"
 official = true
 author_url = "https://github.com/zentinelproxy"

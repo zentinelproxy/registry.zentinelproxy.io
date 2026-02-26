@@ -1,21 +1,26 @@
 +++
-title = "data-masking"
+title = "Data Masking"
+weight = 20
 template = "agent.html"
 path = "data-masking"
+description = "PII protection agent with reversible tokenization, format-preserving encryption, and pattern-based masking for JSON, XML, and form data."
 
 [extra]
 name = "data-masking"
 version = "0.5.4"
 repository = "zentinelproxy/zentinel"
 binary_name = "zentinel-data-masking-agent"
-description = "Real-time data masking and tokenization for PII, credentials, and sensitive fields in request and response bodies."
+description = "PII protection agent with reversible tokenization, format-preserving encryption, and pattern-based masking for JSON, XML, and form data."
 author = "Zentinel Core Team"
 license = "MIT/Apache-2.0"
 status = "stable"
 category = "security"
 tags = ["security", "privacy", "pii", "masking", "tokenization", "gdpr"]
-protocol_version = "v2"
 min_zentinel_version = "26.01.0"
+official = true
+author_url = "https://github.com/zentinelproxy"
+homepage = "https://zentinelproxy.io/agents/data-masking/"
+crate_name = "zentinel-data-masking-agent"
 bundle_included = false
 language = "Rust"
 +++
@@ -38,6 +43,20 @@ The agent intercepts request and response bodies, detects sensitive fields using
 - **Configurable Actions**: Tokenize, FPE, mask, redact, or hash
 
 ## Installation
+
+### Using Bundle (Recommended)
+
+The easiest way to install this agent is via the Zentinel bundle command:
+
+```bash
+# Install just this agent
+zentinel bundle install data-masking
+
+# Or install all available agents
+zentinel bundle install --all
+```
+
+The bundle command automatically downloads the correct binary for your platform and places it in `~/.zentinel/agents/`.
 
 ### Using Cargo
 
@@ -137,10 +156,10 @@ Add to your Zentinel proxy configuration:
 agents {
     data-masking socket="/tmp/data-masking-agent.sock" {
         events "request_headers" "request_body" "response_headers" "response_body" "request_complete"
-        timeout_ms 5000
-        max_request_body_bytes 10485760
-        max_response_body_bytes 10485760
-        failure_mode "fail_open"
+        timeout-ms 5000
+        max-request-body-bytes 10485760
+        max-response-body-bytes 10485760
+        failure-mode "fail_open"
 
         config {
             // Agent-specific config passed as JSON

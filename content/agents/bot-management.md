@@ -1,7 +1,9 @@
 +++
-title = "bot-management"
+title = "Bot Management"
+weight = 100
 template = "agent.html"
 path = "bot-management"
+description = "Comprehensive bot detection with multi-signal analysis, known bot verification, and behavioral tracking."
 
 [extra]
 name = "bot-management"
@@ -14,8 +16,11 @@ license = "Apache-2.0"
 status = "stable"
 category = "security"
 tags = ["security", "bot-detection", "core"]
-protocol_version = "v2"
 min_zentinel_version = "26.01.0"
+official = true
+author_url = "https://github.com/zentinelproxy"
+homepage = "https://zentinelproxy.io/agents/bot-management/"
+crate_name = "zentinel-agent-bot-management"
 bundle_included = true
 bundle_group = "Security agents"
 language = "Rust"
@@ -92,12 +97,12 @@ zentinel-agent-bot-management \
 agent "bot-management" {
     socket "/var/run/zentinel/bot-management.sock"
     timeout 50ms
-    events ["request_headers"]
+    events "request_headers"
 }
 
 route {
     match { path-prefix "/" }
-    agents ["bot-management"]
+    agents "bot-management"
     upstream "backend"
 }
 ```

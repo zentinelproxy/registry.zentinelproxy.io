@@ -1,7 +1,9 @@
 +++
-title = "spiffe"
+title = "SPIFFE"
+weight = 180
 template = "agent.html"
 path = "spiffe"
+description = "SPIFFE/SPIRE workload identity authentication agent for zero-trust service-to-service communication."
 
 [extra]
 name = "spiffe"
@@ -14,8 +16,11 @@ license = "Apache-2.0"
 status = "stable"
 category = "identity"
 tags = ["security", "auth", "zero-trust", "spiffe", "mtls", "identity"]
-protocol_version = "v2"
 min_zentinel_version = "26.01.0"
+official = true
+author_url = "https://github.com/zentinelproxy"
+homepage = "https://zentinelproxy.io/agents/spiffe/"
+crate_name = "zentinel-agent-spiffe"
 bundle_included = true
 bundle_group = "Identity agents"
 language = "Rust"
@@ -123,7 +128,7 @@ agents {
         transport "unix_socket" {
             path "/var/run/zentinel/spiffe.sock"
         }
-        events ["request_headers"]
+        events "request_headers"
         timeout-ms 100
         failure-mode "closed"
 
@@ -137,35 +142,23 @@ agents {
 
             // TLS settings
             tls {
-                require-mtls true
+                require-mtls #true
                 client-cert-header "X-Forwarded-Client-Cert"
             }
 
             // SPIFFE ID allowlist
             allowlist {
                 // Exact SPIFFE IDs
-                exact [
-                    "spiffe://example.org/frontend"
-                    "spiffe://example.org/api-gateway"
-                ]
+                exact "spiffe://example.org/frontend" "spiffe://example.org/api-gateway"
 
                 // Prefix matching
-                prefix [
-                    "spiffe://example.org/services/"
-                    "spiffe://example.org/jobs/"
-                ]
+                prefix "spiffe://example.org/services/" "spiffe://example.org/jobs/"
 
                 // Allow entire trust domains
-                trust-domains [
-                    "example.org"
-                    "staging.example.org"
-                ]
+                trust-domains "example.org" "staging.example.org"
 
                 // Regex patterns
-                patterns [
-                    "spiffe://example\\.org/team-[a-z]+/.*"
-                    "spiffe://.*\\.example\\.org/backend/.*"
-                ]
+                patterns "spiffe://example\\.org/team-[a-z]+/.*" "spiffe://.*\\.example\\.org/backend/.*"
             }
 
             // Failure handling
@@ -186,9 +179,9 @@ agents {
 
             // Audit logging
             audit {
-                log-success true
-                log-failure true
-                include-cert-info true
+                log-success #true
+                log-failure #true
+                include-cert-info #true
             }
         }
     }
@@ -198,7 +191,7 @@ routes {
     route "api" {
         matches { path-prefix "/api" }
         upstream "backend"
-        agents ["spiffe"]
+        agents "spiffe"
     }
 }
 ```
@@ -246,10 +239,7 @@ Allow specific SPIFFE IDs:
 
 ```kdl
 allowlist {
-    exact [
-        "spiffe://example.org/frontend"
-        "spiffe://example.org/backend"
-    ]
+    exact "spiffe://example.org/frontend" "spiffe://example.org/backend"
 }
 ```
 
@@ -259,10 +249,7 @@ Allow SPIFFE IDs starting with a pattern:
 
 ```kdl
 allowlist {
-    prefix [
-        "spiffe://example.org/services/"  // Matches all services
-        "spiffe://example.org/jobs/"      // Matches all jobs
-    ]
+    prefix "spiffe://example.org/services/" "spiffe://example.org/jobs/"
 }
 ```
 
@@ -272,10 +259,7 @@ Allow all workloads from specific trust domains:
 
 ```kdl
 allowlist {
-    trust-domains [
-        "example.org"           // Production
-        "staging.example.org"   // Staging
-    ]
+    trust-domains "example.org" "staging.example.org"
 }
 ```
 
@@ -285,10 +269,7 @@ Flexible pattern matching:
 
 ```kdl
 allowlist {
-    patterns [
-        "spiffe://example\\.org/team-[a-z]+/.*"           // Team workloads
-        "spiffe://.*\\.example\\.org/services/orders.*"   // Order services
-    ]
+    patterns "spiffe://example\\.org/team-[a-z]+/.*" "spiffe://.*\\.example\\.org/services/orders.*"
 }
 ```
 

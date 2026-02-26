@@ -1,7 +1,9 @@
 +++
-title = "ip-reputation"
+title = "IP Reputation"
+weight = 150
 template = "agent.html"
 path = "ip-reputation"
+description = "IP threat intelligence with AbuseIPDB integration, file-based blocklists, and Tor exit node detection."
 
 [extra]
 name = "ip-reputation"
@@ -14,8 +16,11 @@ license = "MIT"
 status = "stable"
 category = "security"
 tags = ["ip-reputation", "threat-intelligence", "security", "blocklist", "tor"]
-protocol_version = "v2"
 min_zentinel_version = "26.01.0"
+official = true
+author_url = "https://github.com/zentinelproxy"
+homepage = "https://zentinelproxy.io/agents/ip-reputation/"
+crate_name = "zentinel-agent-ip-reputation"
 bundle_included = true
 bundle_group = "Security agents"
 language = "Rust"

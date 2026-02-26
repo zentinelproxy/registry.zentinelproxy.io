@@ -1,7 +1,9 @@
 +++
-title = "wasm"
+title = "WebAssembly"
+weight = 240
 template = "agent.html"
 path = "wasm"
+description = "Execute custom Wasm modules for high-performance request/response processing in any language."
 
 [extra]
 name = "wasm"
@@ -14,8 +16,11 @@ license = "Apache-2.0"
 status = "stable"
 category = "scripting"
 tags = ["scripting", "wasm", "extensibility", "performance"]
-protocol_version = "v2"
 min_zentinel_version = "26.01.0"
+official = true
+author_url = "https://github.com/zentinelproxy"
+homepage = "https://zentinelproxy.io/agents/wasm/"
+crate_name = "zentinel-agent-wasm"
 bundle_included = true
 bundle_group = "Scripting agents"
 language = "Rust"
@@ -93,12 +98,12 @@ zentinel-wasm-agent --socket /var/run/zentinel/wasm.sock \
 agent "wasm" {
     socket "/var/run/zentinel/wasm.sock"
     timeout 50ms
-    events ["request_headers" "response_headers"]
+    events "request_headers" "response_headers"
 }
 
 route {
     match { path-prefix "/" }
-    agents ["wasm"]
+    agents "wasm"
     upstream "backend"
 }
 ```

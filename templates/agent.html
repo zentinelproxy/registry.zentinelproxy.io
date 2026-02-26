@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 
-{% block title %}{{ page.extra.name }} - Zentinel Agent Registry{% endblock %}
+{% block title %}{{ page.title }} - Zentinel Agent Registry{% endblock %}
 {% block description %}{{ page.extra.description }}{% endblock %}
-{% block og_title %}{{ page.extra.name }} - Zentinel Agent Registry{% endblock %}
+{% block og_title %}{{ page.title }} - Zentinel Agent Registry{% endblock %}
 {% block og_description %}{{ page.extra.description }}{% endblock %}
 
 {% block content %}
@@ -10,13 +10,19 @@
     <nav class="breadcrumb" aria-label="Breadcrumb">
         <a href="/">Registry</a>
         <span class="separator" aria-hidden="true">/</span>
-        <span class="current" aria-current="page">{{ page.extra.name }}</span>
+        <span class="current" aria-current="page">{{ page.title }}</span>
     </nav>
 
     <div class="agent-detail">
         <div class="agent-detail-header">
             <div class="agent-detail-title">
                 <div class="agent-detail-badges">
+                    {% if page.extra.official %}
+                    <span class="agent-official-badge">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        official
+                    </span>
+                    {% endif %}
                     <span class="agent-status {{ page.extra.status }}">{{ page.extra.status }}</span>
                     <span class="agent-category-tag">{{ page.extra.category }}</span>
                     {% if page.extra.bundle_included %}
@@ -27,7 +33,7 @@
                     {% endif %}
                 </div>
                 <h1>
-                    {{ page.extra.name }}
+                    {{ page.title }}
                     <span class="agent-version">v{{ page.extra.version }}</span>
                 </h1>
                 <p class="agent-detail-subtitle">{{ page.extra.description }}</p>
@@ -52,6 +58,27 @@
             </div>
 
             <aside class="agent-detail-sidebar">
+                {% if page.extra.crate_name %}
+                <div class="sidebar-card">
+                    <h3>Install</h3>
+                    <div class="sidebar-install">
+                        <code>cargo install {{ page.extra.crate_name }}</code>
+                    </div>
+                    {% if page.extra.bundle_included %}
+                    <div class="sidebar-install">
+                        <code>zentinel bundle install {{ page.extra.name }}</code>
+                    </div>
+                    {% endif %}
+                </div>
+                {% elif page.extra.bundle_included %}
+                <div class="sidebar-card">
+                    <h3>Install</h3>
+                    <div class="sidebar-install">
+                        <code>zentinel bundle install {{ page.extra.name }}</code>
+                    </div>
+                </div>
+                {% endif %}
+
                 <div class="sidebar-card">
                     <h3>Metadata</h3>
                     <div class="sidebar-item">
@@ -68,7 +95,13 @@
                     </div>
                     <div class="sidebar-item">
                         <span class="sidebar-label">Author</span>
-                        <span class="sidebar-value">{{ page.extra.author }}</span>
+                        <span class="sidebar-value">
+                            {% if page.extra.author_url %}
+                            <a href="{{ page.extra.author_url }}" target="_blank" rel="noopener">{{ page.extra.author }}</a>
+                            {% else %}
+                            {{ page.extra.author }}
+                            {% endif %}
+                        </span>
                     </div>
                     {% if page.extra.language %}
                     <div class="sidebar-item">
@@ -112,6 +145,11 @@
                     <div class="sidebar-item">
                         <a href="https://github.com/{{ page.extra.repository }}/releases" target="_blank" rel="noopener">Releases</a>
                     </div>
+                    {% if page.extra.crate_name %}
+                    <div class="sidebar-item">
+                        <a href="https://crates.io/crates/{{ page.extra.crate_name }}" target="_blank" rel="noopener">crates.io</a>
+                    </div>
+                    {% endif %}
                     {% if page.extra.bundle_included %}
                     <div class="sidebar-item">
                         <a href="https://github.com/zentinelproxy/zentinel/releases" target="_blank" rel="noopener">Download Bundle</a>

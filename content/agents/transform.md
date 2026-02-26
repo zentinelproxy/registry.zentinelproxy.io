@@ -1,7 +1,9 @@
 +++
-title = "transform"
+title = "Transform"
+weight = 110
 template = "agent.html"
 path = "transform"
+description = "Advanced request and response transformation with URL rewriting, header manipulation, and JSON body transforms."
 
 [extra]
 name = "transform"
@@ -14,8 +16,11 @@ license = "Apache-2.0"
 status = "stable"
 category = "utility"
 tags = ["transformation", "rewriting", "core"]
-protocol_version = "v2"
 min_zentinel_version = "25.12.0"
+official = true
+author_url = "https://github.com/zentinelproxy"
+homepage = "https://zentinelproxy.io/agents/transform/"
+crate_name = "zentinel-agent-transform"
 bundle_included = true
 bundle_group = "Utility agents"
 language = "Rust"
@@ -100,12 +105,12 @@ zentinel-agent-transform \
 agent "transform" {
     socket "/var/run/zentinel/transform.sock"
     timeout 50ms
-    events ["request_headers" "request_body" "response_headers" "response_body"]
+    events "request_headers" "request_body" "response_headers" "response_body"
 }
 
 route {
     match { path-prefix "/api/v1" }
-    agents ["transform"]
+    agents "transform"
     upstream "backend"
 }
 ```

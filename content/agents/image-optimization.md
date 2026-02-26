@@ -16,7 +16,6 @@ license = "MIT/Apache-2.0"
 status = "stable"
 category = "utility"
 tags = ["image", "optimization", "webp", "avif", "caching", "performance"]
-protocol_version = "v2"
 min_zentinel_version = "26.01.0"
 official = true
 author_url = "https://github.com/zentinelproxy"
@@ -100,17 +99,20 @@ agent "image-optimization" {
     failure-mode "open"
 
     config {
-        "formats" ["webp", "avif"]
-        "quality" { "webp" 80; "avif" 70 }
-        "max_input_size_bytes" 10485760
-        "max_pixel_count" 25000000
-        "eligible_content_types" ["image/jpeg", "image/png"]
-        "passthrough_patterns" ["\\.gif$", "\\.svg$"]
-        "cache" {
-            "enabled" true
-            "directory" "/var/cache/zentinel/image-optimization"
-            "max_size_bytes" 1073741824
-            "ttl_secs" 86400
+        formats "webp" "avif"
+        quality {
+            webp 80
+            avif 70
+        }
+        max_input_size_bytes 10485760
+        max_pixel_count 25000000
+        eligible_content_types "image/jpeg" "image/png"
+        passthrough_patterns "\\.gif$" "\\.svg$"
+        cache {
+            enabled #true
+            directory "/var/cache/zentinel/image-optimization"
+            max_size_bytes 1073741824
+            ttl_secs 86400
         }
     }
 }

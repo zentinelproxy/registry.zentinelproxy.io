@@ -1,21 +1,25 @@
 +++
-title = "content-scanner"
+title = "Content Scanner"
+weight = 160
 template = "agent.html"
 path = "content-scanner"
+description = "Malware scanning agent using ClamAV daemon for file upload protection"
 
 [extra]
 name = "content-scanner"
 version = "0.4.0"
 repository = "zentinelproxy/zentinel-agent-content-scanner"
 binary_name = "zentinel-content-scanner-agent"
-description = "Malware scanning agent using ClamAV daemon for file upload protection."
+description = "Malware scanning agent using ClamAV daemon for file upload protection"
 author = "Zentinel Core Team"
 license = "Apache-2.0"
 status = "stable"
 category = "security"
 tags = ["content-scanner", "malware", "clamav", "security", "file-upload"]
-protocol_version = "v2"
 min_zentinel_version = "26.01.0"
+official = true
+author_url = "https://github.com/zentinelproxy"
+homepage = "https://zentinelproxy.io/agents/content-scanner/"
 bundle_included = true
 bundle_group = "Security agents"
 language = "Rust"
@@ -211,8 +215,8 @@ Add the agent to your Zentinel route:
 route "/api/upload" {
     agents "content-scanner" {
         socket "/tmp/content-scanner.sock"
-        timeout_ms 35000
-        fail_mode "open"
+        timeout-ms 35000
+        fail-mode "open"
         phases "request_body"
     }
     upstream "upload-service"

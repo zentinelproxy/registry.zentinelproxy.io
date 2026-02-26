@@ -1,7 +1,9 @@
 +++
-title = "zentinelsec"
+title = "ZentinelSec"
+weight = 60
 template = "agent.html"
 path = "zentinelsec"
+description = "Pure Rust ModSecurity-compatible WAF with full OWASP CRS support - no C dependencies required."
 
 [extra]
 name = "zentinelsec"
@@ -14,8 +16,11 @@ license = "Apache-2.0"
 status = "stable"
 category = "security"
 tags = ["security", "waf", "modsecurity", "owasp", "crs", "pure-rust"]
-protocol_version = "v2"
 min_zentinel_version = "26.01.0"
+official = true
+author_url = "https://github.com/zentinelproxy"
+homepage = "https://zentinelproxy.io/agents/zentinelsec/"
+crate_name = "zentinel-agent-zentinelsec"
 bundle_included = true
 bundle_group = "Security agents"
 language = "Rust"
@@ -153,12 +158,12 @@ zentinel-zentinelsec-agent \
 agent "zentinelsec" {
     socket "/var/run/zentinel/zentinelsec.sock"
     timeout 100ms
-    events ["request_headers" "request_body_chunk" "response_body_chunk"]
+    events "request_headers" "request_body_chunk" "response_body_chunk"
 }
 
 route {
     match { path-prefix "/" }
-    agents ["zentinelsec"]
+    agents "zentinelsec"
     upstream "backend"
 }
 ```

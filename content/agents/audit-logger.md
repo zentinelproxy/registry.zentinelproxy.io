@@ -1,7 +1,9 @@
 +++
-title = "audit-logger"
+title = "Audit Logger"
+weight = 120
 template = "agent.html"
 path = "audit-logger"
+description = "Structured audit logging agent with PII redaction, multiple formats (JSON, CEF, LEEF), and compliance templates for SOC2, HIPAA, PCI, and GDPR."
 
 [extra]
 name = "audit-logger"
@@ -14,8 +16,11 @@ license = "Apache-2.0"
 status = "stable"
 category = "utility"
 tags = ["logging", "compliance", "security", "audit"]
-protocol_version = "v2"
 min_zentinel_version = "25.12.0"
+official = true
+author_url = "https://github.com/zentinelproxy"
+homepage = "https://zentinelproxy.io/agents/audit-logger/"
+crate_name = "zentinel-agent-audit-logger"
 bundle_included = true
 bundle_group = "Utility agents"
 language = "Rust"

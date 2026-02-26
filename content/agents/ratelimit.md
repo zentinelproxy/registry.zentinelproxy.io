@@ -1,7 +1,9 @@
 +++
-title = "ratelimit"
+title = "Rate Limiter"
+weight = 10
 template = "agent.html"
 path = "ratelimit"
+description = "Token bucket rate limiting with configurable windows and limits per route, IP, or custom keys."
 
 [extra]
 name = "ratelimit"
@@ -14,8 +16,11 @@ license = "Apache-2.0"
 status = "deprecated"
 category = "core"
 tags = ["security", "traffic", "deprecated"]
-protocol_version = "v2"
 min_zentinel_version = "25.12.0"
+official = true
+author_url = "https://github.com/zentinelproxy"
+homepage = "https://zentinelproxy.io/agents/ratelimit/"
+crate_name = "zentinel-agent-ratelimit"
 bundle_included = true
 bundle_group = "Core agents"
 language = "Rust"
@@ -52,7 +57,7 @@ agent "ratelimit" {
 
 route {
     match { path-prefix "/api/" }
-    agents ["ratelimit"]
+    agents "ratelimit"
     upstream "backend"
 }
 ```
@@ -223,7 +228,7 @@ Add the agent to your Zentinel configuration:
 agent "ratelimit" {
     socket "/var/run/zentinel/ratelimit.sock"
     timeout 100ms
-    fail-open false
+    fail-open #false
 
     config {
         default-limit 100
@@ -242,7 +247,7 @@ For higher throughput, use gRPC transport:
 agent "ratelimit" {
     grpc "localhost:50051"
     timeout 100ms
-    fail-open false
+    fail-open #false
     protocol "v2"
 
     config {

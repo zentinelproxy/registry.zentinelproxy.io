@@ -1,7 +1,9 @@
 +++
-title = "lua"
+title = "Lua Scripting"
+weight = 50
 template = "agent.html"
 path = "lua"
+description = "Embed custom Lua scripts for flexible request/response processing and header manipulation."
 
 [extra]
 name = "lua"
@@ -14,8 +16,11 @@ license = "Apache-2.0"
 status = "stable"
 category = "scripting"
 tags = ["scripting", "extensibility", "core"]
-protocol_version = "v2"
 min_zentinel_version = "26.01.0"
+official = true
+author_url = "https://github.com/zentinelproxy"
+homepage = "https://zentinelproxy.io/agents/lua/"
+crate_name = "zentinel-agent-lua"
 bundle_included = true
 bundle_group = "Scripting agents"
 language = "Rust"
@@ -499,13 +504,13 @@ The error message is included in the `reason_codes` audit field.
 agent "lua" {
     socket "/tmp/zentinel-lua.sock"
     timeout 50ms
-    events ["request_headers" "response_headers"]
+    events "request_headers" "response_headers"
     failure-mode open
 }
 
 route {
     match { path-prefix "/" }
-    agents ["lua"]
+    agents "lua"
     upstream "backend"
 }
 ```

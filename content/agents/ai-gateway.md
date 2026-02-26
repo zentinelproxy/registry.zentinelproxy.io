@@ -1,21 +1,26 @@
 +++
-title = "ai-gateway"
+title = "AI Gateway"
+weight = 20
 template = "agent.html"
 path = "ai-gateway"
+description = "Pattern-based security for AI APIs: prompt injection detection, jailbreak prevention, PII detection, and schema validation for LLM traffic."
 
 [extra]
 name = "ai-gateway"
 version = "0.2.0"
 repository = "zentinelproxy/zentinel-agent-ai-gateway"
 binary_name = "zentinel-ai-gateway-agent"
-description = "AI/LLM gateway agent with provider routing, token rate limiting, prompt inspection, and cost tracking for OpenAI, Anthropic, and other LLM APIs."
+description = "Pattern-based security for AI APIs: prompt injection detection, jailbreak prevention, PII detection, and schema validation for LLM traffic."
 author = "Zentinel Core Team"
 license = "Apache-2.0"
 status = "stable"
 category = "api-security"
 tags = ["ai", "llm", "gateway", "openai", "anthropic", "rate-limiting"]
-protocol_version = "v2"
 min_zentinel_version = "26.01.0"
+official = true
+author_url = "https://github.com/zentinelproxy"
+homepage = "https://zentinelproxy.io/agents/ai-gateway/"
+crate_name = "zentinel-agent-ai-gateway"
 bundle_included = false
 language = "Rust"
 +++
@@ -90,10 +95,32 @@ Analyze and filter LLM responses before they reach the client:
 
 ## Installation
 
+### Using Bundle (Recommended)
+
+The easiest way to install this agent is via the Zentinel bundle command:
+
+```bash
+# Install just this agent
+zentinel bundle install ai-gateway
+
+# Or install all available agents
+zentinel bundle install --all
+```
+
+The bundle command automatically downloads the correct binary for your platform and places it in `~/.zentinel/agents/`.
+
 ### Using Cargo
 
 ```bash
 cargo install zentinel-agent-ai-gateway
+```
+
+### From Source
+
+```bash
+git clone https://github.com/zentinelproxy/zentinel-agent-ai-gateway
+cd zentinel-agent-ai-gateway
+cargo build --release
 ```
 
 ## Configuration
@@ -158,13 +185,13 @@ agent "ai-gateway" {
     socket "/tmp/zentinel-ai-gateway.sock"
     timeout 5s
     // Include response events for output guardrails
-    events ["request_headers" "request_body_chunk" "response_headers" "response_body_chunk"]
+    events "request_headers" "request_body_chunk" "response_headers" "response_body_chunk"
 }
 
 route {
     match { path-prefix "/v1/chat" }
     inference "openai"
-    agents ["ai-gateway"]
+    agents "ai-gateway"
     upstream "openai-backend"
 }
 ```

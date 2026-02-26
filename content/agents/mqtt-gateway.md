@@ -1,7 +1,9 @@
 +++
-title = "mqtt-gateway"
+title = "MQTT Gateway"
+weight = 80
 template = "agent.html"
 path = "mqtt-gateway"
+description = "IoT protocol security for MQTT: topic-based ACLs, client authentication, payload inspection, rate limiting, and QoS enforcement."
 
 [extra]
 name = "mqtt-gateway"
@@ -14,8 +16,11 @@ license = "Apache-2.0"
 status = "stable"
 category = "protocol"
 tags = ["mqtt", "iot", "security", "authentication", "acl", "rate-limiting"]
-protocol_version = "v2"
 min_zentinel_version = "26.01.0"
+official = true
+author_url = "https://github.com/zentinelproxy"
+homepage = "https://zentinelproxy.io/agents/mqtt-gateway/"
+crate_name = "zentinel-agent-mqtt-gateway"
 bundle_included = true
 bundle_group = "Protocol agents"
 language = "Rust"
@@ -363,16 +368,16 @@ Enable WebSocket support and attach the MQTT Gateway agent:
 agent "mqtt-gateway" {
     socket "/tmp/zentinel-mqtt.sock"
     timeout 100ms
-    events ["websocket_frame"]
+    events "websocket_frame"
     failure-mode closed
 
     config {
         auth {
-            enabled true
-            allow-anonymous false
+            enabled #true
+            allow-anonymous #false
         }
         acl {
-            enabled true
+            enabled #true
             default-action "deny"
         }
     }
@@ -383,7 +388,7 @@ route {
     websocket enabled {
         max-frame-size 65536
     }
-    agents ["mqtt-gateway"]
+    agents "mqtt-gateway"
     upstream "mqtt-broker"
 }
 ```

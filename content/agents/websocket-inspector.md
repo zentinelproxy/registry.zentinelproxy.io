@@ -1,7 +1,9 @@
 +++
-title = "websocket-inspector"
+title = "WebSocket Inspector"
+weight = 70
 template = "agent.html"
 path = "websocket-inspector"
+description = "Security analysis for WebSocket frames: content filtering, schema validation, and attack detection for real-time connections."
 
 [extra]
 name = "websocket-inspector"
@@ -14,8 +16,11 @@ license = "Apache-2.0"
 status = "stable"
 category = "protocol"
 tags = ["websocket", "security", "real-time", "inspection"]
-protocol_version = "v2"
 min_zentinel_version = "26.01.0"
+official = true
+author_url = "https://github.com/zentinelproxy"
+homepage = "https://zentinelproxy.io/agents/websocket-inspector/"
+crate_name = "zentinel-agent-websocket-inspector"
 bundle_included = true
 bundle_group = "Protocol agents"
 language = "Rust"
@@ -189,7 +194,7 @@ Enable WebSocket support on a route and attach the inspector agent:
 agent "websocket-inspector" {
     socket "/tmp/zentinel-ws.sock"
     timeout 50ms
-    events ["websocket_frame"]
+    events "websocket_frame"
     failure-mode open
 }
 
@@ -198,7 +203,7 @@ route {
     websocket enabled {
         max-frame-size 65536
     }
-    agents ["websocket-inspector"]
+    agents "websocket-inspector"
     upstream "backend"
 }
 ```
@@ -284,7 +289,7 @@ Detections are logged with audit tags for analysis:
 agent "websocket-inspector" {
     socket "/tmp/chat-ws.sock"
     timeout 50ms
-    events ["websocket_frame"]
+    events "websocket_frame"
 }
 
 route {
@@ -292,7 +297,7 @@ route {
     websocket enabled {
         max-frame-size 4096
     }
-    agents ["websocket-inspector"]
+    agents "websocket-inspector"
     upstream "chat-backend"
 }
 ```

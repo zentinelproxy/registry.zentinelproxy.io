@@ -1,7 +1,9 @@
 +++
-title = "js"
+title = "JavaScript Scripting"
+weight = 230
 template = "agent.html"
 path = "js"
+description = "Write custom request/response processing logic in JavaScript using the QuickJS engine."
 
 [extra]
 name = "js"
@@ -14,8 +16,11 @@ license = "Apache-2.0"
 status = "stable"
 category = "scripting"
 tags = ["scripting", "javascript", "extensibility"]
-protocol_version = "v2"
 min_zentinel_version = "25.12.0"
+official = true
+author_url = "https://github.com/zentinelproxy"
+homepage = "https://zentinelproxy.io/agents/js/"
+crate_name = "zentinel-agent-js"
 bundle_included = true
 bundle_group = "Scripting agents"
 language = "Rust"
@@ -92,12 +97,12 @@ zentinel-js-agent --socket /var/run/zentinel/js.sock \
 agent "js" {
     socket "/var/run/zentinel/js.sock"
     timeout 100ms
-    events ["request_headers" "response_headers"]
+    events "request_headers" "response_headers"
 }
 
 route {
     match { path-prefix "/" }
-    agents ["js"]
+    agents "js"
     upstream "backend"
 }
 ```

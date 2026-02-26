@@ -1,7 +1,9 @@
 +++
-title = "mock-server"
+title = "Mock Server"
+weight = 220
 template = "agent.html"
 path = "mock-server"
+description = "A mock server agent that intercepts requests and returns configurable stub responses with support for templating, latency simulation, and fault injection."
 
 [extra]
 name = "mock-server"
@@ -14,8 +16,11 @@ license = "Apache-2.0"
 status = "stable"
 category = "utility"
 tags = ["mock", "testing", "development", "stubs", "api"]
-protocol_version = "v2"
 min_zentinel_version = "26.01.0"
+official = true
+author_url = "https://github.com/zentinelproxy"
+homepage = "https://zentinelproxy.io/agents/mock-server/"
+crate_name = "zentinel-agent-mock-server"
 bundle_included = true
 bundle_group = "Utility agents"
 language = "Rust"

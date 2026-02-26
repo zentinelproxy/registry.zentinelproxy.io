@@ -1,7 +1,9 @@
 +++
-title = "api-deprecation"
+title = "API Deprecation"
+weight = 210
 template = "agent.html"
 path = "api-deprecation"
+description = "API lifecycle management agent with RFC 8594 Sunset headers, usage tracking, automatic redirects, and migration support for graceful API deprecation."
 
 [extra]
 name = "api-deprecation"
@@ -14,8 +16,11 @@ license = "Apache-2.0"
 status = "stable"
 category = "api-security"
 tags = ["api", "deprecation", "lifecycle", "sunset", "migration"]
-protocol_version = "v2"
 min_zentinel_version = "26.01.0"
+official = true
+author_url = "https://github.com/zentinelproxy"
+homepage = "https://zentinelproxy.io/agents/api-deprecation/"
+crate_name = "zentinel-agent-api-deprecation"
 bundle_included = true
 bundle_group = "API security agents"
 language = "Rust"

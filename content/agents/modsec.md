@@ -1,7 +1,9 @@
 +++
-title = "modsec"
+title = "ModSecurity"
+weight = 190
 template = "agent.html"
 path = "modsec"
+description = "Full OWASP Core Rule Set (CRS) support via libmodsecurity with 800+ detection rules."
 
 [extra]
 name = "modsec"
@@ -14,8 +16,11 @@ license = "Apache-2.0"
 status = "stable"
 category = "security"
 tags = ["security", "waf", "modsecurity", "owasp", "crs"]
-protocol_version = "v2"
 min_zentinel_version = "25.12.0"
+official = true
+author_url = "https://github.com/zentinelproxy"
+homepage = "https://zentinelproxy.io/agents/modsec/"
+crate_name = "zentinel-agent-modsec"
 bundle_included = true
 bundle_group = "Security agents"
 language = "Rust"
@@ -114,12 +119,12 @@ zentinel-modsec-agent \
 agent "modsec" {
     socket "/var/run/zentinel/modsec.sock"
     timeout 100ms
-    events ["request_headers" "request_body_chunk" "response_body_chunk"]
+    events "request_headers" "request_body_chunk" "response_body_chunk"
 }
 
 route {
     match { path-prefix "/" }
-    agents ["modsec"]
+    agents "modsec"
     upstream "backend"
 }
 ```

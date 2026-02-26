@@ -1,7 +1,9 @@
 +++
-title = "graphql-security"
+title = "GraphQL Security"
+weight = 140
 template = "agent.html"
 path = "graphql-security"
+description = "GraphQL-specific security controls including query depth limiting, complexity analysis, introspection control, and field-level authorization."
 
 [extra]
 name = "graphql-security"
@@ -14,8 +16,11 @@ license = "Apache-2.0"
 status = "stable"
 category = "api-security"
 tags = ["security", "graphql", "api"]
-protocol_version = "v2"
 min_zentinel_version = "26.01.0"
+official = true
+author_url = "https://github.com/zentinelproxy"
+homepage = "https://zentinelproxy.io/agents/graphql-security/"
+crate_name = "zentinel-agent-graphql-security"
 bundle_included = true
 bundle_group = "API security agents"
 language = "Rust"
@@ -171,12 +176,12 @@ persisted_queries:
 agent "graphql-security" {
     socket "/var/run/zentinel/graphql.sock"
     timeout 100ms
-    events ["request_headers" "request_body"]
+    events "request_headers" "request_body"
 }
 
 route {
     match { path "/graphql" }
-    agents ["graphql-security"]
+    agents "graphql-security"
     upstream "graphql-backend"
 }
 ```

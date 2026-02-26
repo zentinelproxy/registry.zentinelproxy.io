@@ -1,7 +1,9 @@
 +++
-title = "chaos"
+title = "Chaos Engineering"
+weight = 40
 template = "agent.html"
 path = "chaos"
+description = "Controlled fault injection for resilience testing: latency, errors, timeouts, and more with flexible targeting and safety controls."
 
 [extra]
 name = "chaos"
@@ -14,8 +16,11 @@ license = "MIT"
 status = "stable"
 category = "utility"
 tags = ["chaos", "testing", "resilience", "fault-injection"]
-protocol_version = "v2"
 min_zentinel_version = "26.01.0"
+official = true
+author_url = "https://github.com/zentinelproxy"
+homepage = "https://zentinelproxy.io/agents/chaos/"
+crate_name = "zentinel-agent-chaos"
 bundle_included = true
 bundle_group = "Utility agents"
 language = "Rust"
@@ -286,7 +291,7 @@ agents {
         transport "unix_socket" {
             path "/tmp/zentinel-chaos.sock"
         }
-        events ["request_headers"]
+        events "request_headers"
         timeout-ms 100
         failure-mode "open"
     }
