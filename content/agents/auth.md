@@ -1,14 +1,16 @@
 +++
-title = "auth"
+title = "Auth"
+weight = 30
 template = "agent.html"
 path = "auth"
+description = "Authentication and authorization agent supporting JWT, OIDC, API keys, Basic auth, SAML SSO, mTLS, Cedar policies, and token exchange."
 
 [extra]
 name = "auth"
 version = "0.2.0"
 repository = "zentinelproxy/zentinel-agent-auth"
 binary_name = "zentinel-auth-agent"
-description = "Authentication and authorization agent supporting JWT validation, OAuth 2.0 token introspection, API key management, and RBAC policies."
+description = "Authentication and authorization agent supporting JWT, OIDC, API keys, Basic auth, SAML SSO, mTLS, Cedar policies, and token exchange."
 author = "Zentinel Core Team"
 license = "Apache-2.0"
 status = "stable"
@@ -16,6 +18,10 @@ category = "identity"
 tags = ["auth", "jwt", "oauth", "rbac", "api-key", "identity"]
 protocol_version = "v2"
 min_zentinel_version = "26.01.0"
+official = true
+author_url = "https://github.com/zentinelproxy"
+homepage = "https://zentinelproxy.io/agents/auth/"
+crate_name = "zentinel-agent-auth"
 bundle_included = false
 language = "Rust"
 +++
@@ -53,6 +59,20 @@ The Auth agent provides comprehensive authentication and authorization for your 
 - **Graceful Lifecycle**: Proper drain and shutdown handling
 
 ## Installation
+
+### Using Bundle (Recommended)
+
+The easiest way to install this agent is via the Zentinel bundle command:
+
+```bash
+# Install just this agent
+zentinel bundle install auth
+
+# Or install all available agents
+zentinel bundle install --all
+```
+
+The bundle command automatically downloads the correct binary for your platform and places it in `~/.zentinel/agents/`.
 
 ### Using Cargo
 
@@ -116,10 +136,9 @@ agents {
         transport "unix_socket" {
             path "/var/run/zentinel/auth.sock"
         }
-        events ["request_headers" "request_body_chunk"]
+        events "request_headers" "request_body_chunk"
         timeout-ms 100
         failure-mode "closed"
-        protocol-version 2
 
         config {
             // JWT configuration
@@ -140,7 +159,7 @@ agents {
             auth-method-header "X-Auth-Method"
 
             // Behavior
-            fail-open false
+            fail-open #false
         }
     }
 }
@@ -149,7 +168,7 @@ routes {
     route "api" {
         matches { path-prefix "/api" }
         upstream "backend"
-        agents ["auth"]
+        agents "auth"
     }
 }
 ```
@@ -163,10 +182,9 @@ agents {
         transport "grpc" {
             address "127.0.0.1:50051"
         }
-        events ["request_headers" "request_body_chunk"]
+        events "request_headers" "request_body_chunk"
         timeout-ms 100
         failure-mode "closed"
-        protocol-version 2
     }
 }
 ```
@@ -241,11 +259,11 @@ OIDC authentication with automatic JWKS key fetching and rotation:
 ```kdl
 config {
     oidc {
-        enabled true
+        enabled #true
         issuer "https://auth.example.com"
         jwks-url "https://auth.example.com/.well-known/jwks.json"
         audience "my-api"
-        required-scopes ["read" "write"]
+        required-scopes "read" "write"
         jwks-refresh-secs 3600
     }
 }
@@ -273,7 +291,7 @@ curl -H "Authorization: Bearer <oauth2-access-token>" http://localhost:8080/api
 **Auth0:**
 ```kdl
 oidc {
-    enabled true
+    enabled #true
     issuer "https://your-tenant.auth0.com/"
     jwks-url "https://your-tenant.auth0.com/.well-known/jwks.json"
     audience "https://your-api.example.com"
@@ -283,7 +301,7 @@ oidc {
 **Okta:**
 ```kdl
 oidc {
-    enabled true
+    enabled #true
     issuer "https://your-org.okta.com/oauth2/default"
     jwks-url "https://your-org.okta.com/oauth2/default/v1/keys"
     audience "api://your-api"
@@ -293,7 +311,7 @@ oidc {
 **Azure AD:**
 ```kdl
 oidc {
-    enabled true
+    enabled #true
     issuer "https://login.microsoftonline.com/{tenant-id}/v2.0"
     jwks-url "https://login.microsoftonline.com/{tenant-id}/discovery/v2.0/keys"
     audience "api://{client-id}"
@@ -307,11 +325,11 @@ Authenticate services using X.509 client certificates. The Zentinel proxy termin
 ```kdl
 config {
     mtls {
-        enabled true
+        enabled #true
         client-cert-header "X-Client-Cert"
-        allowed-dns ["CN=api-gateway,O=Example Corp" "CN=backend-service,O=Example Corp"]
-        allowed-sans ["service@example.com"]
-        extract-cn-as-user true
+        allowed-dns "CN=api-gateway,O=Example Corp" "CN=backend-service,O=Example Corp"
+        allowed-sans "service@example.com"
+        extract-cn-as-user #true
     }
 }
 ```
@@ -327,6 +345,8 @@ listener {
     }
 }
 ```
+
+> **Note:** This KDL block configures the Zentinel proxy listener, not the auth agent.
 
 #### mTLS Options
 
@@ -349,11 +369,11 @@ The agent supports SAML 2.0 SP-initiated SSO with built-in session persistence.
 ```kdl
 agent "auth" {
     socket "/var/run/zentinel/auth.sock"
-    events ["request_headers" "request_body_chunk"]
+    events "request_headers" "request_body_chunk"
 
     config {
         saml {
-            enabled true
+            enabled #true
 
             // Service Provider settings
             entity-id "https://app.example.com/sp"
@@ -370,8 +390,8 @@ agent "auth" {
 
             // Cookie settings
             session-cookie-name "zentinel_saml_session"
-            cookie-secure true
-            cookie-http-only true
+            cookie-secure #true
+            cookie-http-only #true
             cookie-same-site "Lax"
 
             // Attribute mapping (SAML attribute -> HTTP header)
@@ -382,8 +402,8 @@ agent "auth" {
             }
 
             // Path protection
-            protected-paths ["/app" "/api" "/admin"]
-            excluded-paths ["/health" "/metrics" "/public"]
+            protected-paths "/app" "/api" "/admin"
+            excluded-paths "/health" "/metrics" "/public"
         }
     }
 }
@@ -423,7 +443,7 @@ agent "auth" {
 
 ```kdl
 saml {
-    enabled true
+    enabled #true
     entity-id "https://app.example.com/sp"
     acs-url "https://app.example.com/saml/acs"
     idp-metadata-url "https://your-org.okta.com/app/exk.../sso/saml/metadata"
@@ -434,7 +454,7 @@ saml {
 
 ```kdl
 saml {
-    enabled true
+    enabled #true
     entity-id "https://app.example.com/sp"
     acs-url "https://app.example.com/saml/acs"
     idp-metadata-url "https://login.microsoftonline.com/{tenant}/federationmetadata/2007-06/federationmetadata.xml"
@@ -448,7 +468,7 @@ saml {
 
 ```kdl
 saml {
-    enabled true
+    enabled #true
     entity-id "https://app.example.com/sp"
     acs-url "https://app.example.com/saml/acs"
     idp-metadata-url "https://keycloak.example.com/realms/myrealm/protocol/saml/descriptor"
@@ -483,7 +503,7 @@ After authentication, the Cedar policy engine evaluates whether the request is a
 ```kdl
 config {
     authz {
-        enabled true
+        enabled #true
         policy-file "/etc/zentinel/policies/auth.cedar"
         default-decision "deny"
         principal-claim "sub"
@@ -567,16 +587,22 @@ Exchange one token type for another (e.g., SAML assertion → JWT).
 ```kdl
 config {
     token-exchange {
-        enabled true
+        enabled #true
         endpoint-path "/token/exchange"
         issuer "https://auth.internal.example.com"
         signing-key-file "/etc/zentinel/jwt-private.pem"
         signing-algorithm "RS256"
         token-ttl-secs 3600
-        allowed-exchanges [
-            { subject-token-type "saml2" issued-token-type "access_token" }
-            { subject-token-type "jwt" issued-token-type "access_token" }
-        ]
+        allowed-exchanges {
+            exchange {
+                subject-token-type "saml2"
+                issued-token-type "access_token"
+            }
+            exchange {
+                subject-token-type "jwt"
+                issued-token-type "access_token"
+            }
+        }
     }
 }
 ```
@@ -685,13 +711,13 @@ agent "auth" {
 
         // SAML for browser users
         saml {
-            enabled true
+            enabled #true
             entity-id "https://app.example.com/sp"
             acs-url "https://app.example.com/saml/acs"
             idp-sso-url "https://idp.example.com/sso"
             idp-entity-id "https://idp.example.com"
-            protected-paths ["/app" "/dashboard"]
-            excluded-paths ["/api"]  // API uses JWT/API keys
+            protected-paths "/app" "/dashboard"
+            excluded-paths "/api"  // API uses JWT/API keys
         }
     }
 }

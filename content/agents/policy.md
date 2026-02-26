@@ -1,14 +1,16 @@
 +++
-title = "policy"
+title = "Policy"
+weight = 10
 template = "agent.html"
 path = "policy"
+description = "Multi-language policy evaluation agent supporting Cedar and Rego/OPA for fine-grained authorization decisions."
 
 [extra]
 name = "policy"
 version = "0.1.0"
 repository = "zentinelproxy/zentinel-agent-policy"
 binary_name = "zentinel-policy-agent"
-description = "Policy engine agent with a Haskell-based DSL for expressing complex access control, routing, and transformation policies."
+description = "Multi-language policy evaluation agent supporting Cedar and Rego/OPA for fine-grained authorization decisions."
 author = "Zentinel Core Team"
 license = "Apache-2.0"
 status = "beta"
@@ -16,6 +18,9 @@ category = "identity"
 tags = ["policy", "access-control", "haskell", "dsl", "authorization"]
 protocol_version = "v2"
 min_zentinel_version = "26.01.0"
+official = true
+author_url = "https://github.com/zentinelproxy"
+homepage = "https://zentinelproxy.io/agents/policy/"
 bundle_included = false
 language = "Haskell"
 +++
@@ -76,6 +81,26 @@ chmod +x opa && sudo mv opa /usr/local/bin/
 
 ## Installation
 
+### Using Bundle (Recommended)
+
+The easiest way to install this agent is via the Zentinel bundle command:
+
+```bash
+# Install just this agent
+zentinel bundle install policy
+
+# Or install all available agents
+zentinel bundle install --all
+```
+
+The bundle command automatically downloads the correct binary for your platform and places it in `~/.zentinel/agents/`.
+
+### Using Cabal
+
+```bash
+cabal install zentinel-agent-policy
+```
+
 ### From Source
 
 ```bash
@@ -83,12 +108,6 @@ git clone https://github.com/zentinelproxy/zentinel-agent-policy
 cd zentinel-agent-policy
 cabal build
 cabal install
-```
-
-### Using Cabal
-
-```bash
-cabal install zentinel-agent-policy
 ```
 
 ## Quick Start
@@ -150,10 +169,9 @@ agents {
         transport "unix_socket" {
             path "/var/run/zentinel/policy.sock"
         }
-        events ["request_headers"]
+        events "request_headers"
         timeout-ms 100
         failure-mode "closed"
-        protocol-version 2
     }
 }
 
@@ -161,7 +179,7 @@ routes {
     route "api" {
         matches { path-prefix "/api" }
         upstream "backend"
-        agents ["policy"]
+        agents "policy"
     }
 }
 ```
@@ -458,7 +476,7 @@ agents {
         transport "unix_socket" {
             path "/var/run/zentinel/auth.sock"
         }
-        events ["request_headers"]
+        events "request_headers"
         timeout-ms 100
         failure-mode "closed"
     }
@@ -468,7 +486,7 @@ agents {
         transport "unix_socket" {
             path "/var/run/zentinel/policy.sock"
         }
-        events ["request_headers"]
+        events "request_headers"
         timeout-ms 100
         failure-mode "closed"
     }
@@ -479,7 +497,7 @@ routes {
         matches { path-prefix "/api" }
         upstream "backend"
         // Auth runs first (authenticates), then policy (authorizes)
-        agents ["auth", "policy"]
+        agents "auth" "policy"
     }
 }
 ```

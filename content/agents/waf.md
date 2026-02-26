@@ -1,14 +1,16 @@
 +++
-title = "waf"
+title = "WAF (Web Application Firewall)"
+weight = 10
 template = "agent.html"
 path = "waf"
+description = "Pure Rust WAF with 285 detection rules, anomaly scoring, API security, schema validation, bot protection, and n-gram based payload analysis."
 
 [extra]
 name = "waf"
 version = "0.3.0"
 repository = "zentinelproxy/zentinel-agent-waf"
 binary_name = "zentinel-waf-agent"
-description = "Pure Rust WAF with 285 detection rules, anomaly scoring, and API security."
+description = "Pure Rust WAF with 285 detection rules, anomaly scoring, API security, schema validation, bot protection, and n-gram based payload analysis."
 author = "Zentinel Core Team"
 license = "Apache-2.0"
 status = "stable"
@@ -16,6 +18,10 @@ category = "security"
 tags = ["security", "waf", "core", "api-security"]
 protocol_version = "v2"
 min_zentinel_version = "26.01.0"
+official = true
+author_url = "https://github.com/zentinelproxy"
+homepage = "https://zentinelproxy.io/agents/waf/"
+crate_name = "zentinel-agent-waf"
 bundle_included = true
 bundle_group = "Core agents"
 language = "Rust"
@@ -219,10 +225,9 @@ agents {
         transport "unix_socket" {
             path "/var/run/zentinel/waf.sock"
         }
-        events ["request_headers", "request_body_chunk", "response_body_chunk", "websocket_frame"]
+        events "request_headers" "request_body_chunk" "response_body_chunk" "websocket_frame"
         timeout-ms 50
         failure-mode "open"
-        protocol-version 2
     }
 }
 
@@ -230,7 +235,7 @@ routes {
     route "api" {
         matches { path-prefix "/api" }
         upstream "backend"
-        agents ["waf"]
+        agents "waf"
     }
 }
 ```
@@ -244,10 +249,9 @@ agents {
         transport "grpc" {
             address "127.0.0.1:50051"
         }
-        events ["request_headers", "request_body_chunk", "response_body_chunk", "websocket_frame"]
+        events "request_headers" "request_body_chunk" "response_body_chunk" "websocket_frame"
         timeout-ms 50
         failure-mode "open"
-        protocol-version 2
     }
 }
 ```
