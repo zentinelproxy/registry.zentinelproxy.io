@@ -89,31 +89,49 @@ zentinel-image-optimization-agent \
 ### Zentinel Configuration
 
 ```kdl
-agent "image-optimization" {
-    transport "unix" {
-        path "/tmp/image-optimization.sock"
-    }
-    events "request_headers" "response_headers" "response_body" "request_complete"
-    protocol "v2"
-    timeout-ms 5000
-    failure-mode "open"
+agents {
+    agent "image-optimization" type="custom" {
+        unix-socket "/tmp/image-optimization.sock"
+        events "request_headers" "response_headers" "response_body"
+        timeout-ms 5000
+        failure-mode "open"
+        response-body-mode "buffer"
+        max-response-body-bytes 10485760
 
-    config {
-        formats "webp" "avif"
-        quality {
-            webp 80
-            avif 70
+        config {
+            formats "webp" "avif"
+            quality {
+                webp 80
+                avif 70
+            }
+            max_input_size_bytes 10485760
+            max_pixel_count 25000000
+            eligible_content_types "image/jpeg" "image/png"
+            passthrough_patterns "\\.gif$" "\\.svg$"
+            cache {
+                enabled #true
+                directory "/var/cache/zentinel/image-optimization"
+                max_size_bytes 1073741824
+                ttl_secs 86400
+            }
         }
-        max_input_size_bytes 10485760
-        max_pixel_count 25000000
-        eligible_content_types "image/jpeg" "image/png"
-        passthrough_patterns "\\.gif$" "\\.svg$"
-        cache {
-            enabled #true
-            directory "/var/cache/zentinel/image-optimization"
-            max_size_bytes 1073741824
-            ttl_secs 86400
-        }
+    }
+}
+
+filters {
+    filter "image-optimization" {
+        type "agent"
+        agent "image-optimization"
+        timeout-ms 5000
+        failure-mode "open"
+    }
+}
+
+routes {
+    route "images" {
+        matches { path-prefix "/" }
+        upstream "backend"
+        filters "image-optimization"
     }
 }
 ```
@@ -162,14 +180,18 @@ Client                  Zentinel Proxy              Image Optimization Agent
   │  Accept: image/webp     │                               │
   │────────────────────────►│  request_headers              │
   │                         │──────────────────────────────►│
-  │                         │  (extract Accept + URI)       │
+  │                         │  (extract Accept + URI,       │
+  │                         │   store per-request state)    │
   │                         │◄──────────────────────────────│
+  │                         │                               │
+  │                         │  (forward to upstream)        │
   │                         │                               │
   │                         │  response_headers             │
   │                         │──────────────────────────────►│
   │                         │  (check content-type,         │
   │                         │   negotiate format,           │
-  │                         │   check cache)                │
+  │                         │   set Content-Type + Vary     │
+  │                         │   headers proactively)        │
   │                         │◄──────────────────────────────│
   │                         │                               │
   │                         │  response_body (chunks)       │
@@ -180,8 +202,11 @@ Client                  Zentinel Proxy              Image Optimization Agent
   │  200 OK                 │                               │
   │  Content-Type: image/webp                               │
   │  X-Image-Optimized: webp                                │
+  │  Vary: Accept                                           │
   │◄────────────────────────│                               │
 ```
+
+Response headers (`Content-Type`, `Vary`, `X-Image-Optimized`) are set proactively during the `response_headers` phase because by the time the response body is processed, headers have already been sent to the client.
 
 ## Response Headers
 
