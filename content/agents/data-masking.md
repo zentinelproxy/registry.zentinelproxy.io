@@ -7,7 +7,7 @@ description = "PII protection agent with reversible tokenization, format-preserv
 
 [extra]
 name = "data-masking"
-version = "0.5.4"
+version = "0.5.11"
 repository = "zentinelproxy/zentinel"
 binary_name = "zentinel-data-masking-agent"
 description = "PII protection agent with reversible tokenization, format-preserving encryption, and pattern-based masking for JSON, XML, and form data."

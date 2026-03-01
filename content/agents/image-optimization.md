@@ -7,7 +7,7 @@ description = "On-the-fly JPEG/PNG to WebP/AVIF conversion with content negotiat
 
 [extra]
 name = "image-optimization"
-version = "0.1.0"
+version = "0.2.0"
 repository = "zentinelproxy/zentinel-agent-image-optimization"
 binary_name = "zentinel-image-optimization-agent"
 description = "On-the-fly JPEG/PNG to WebP/AVIF conversion with content negotiation, filesystem caching, and graceful fallback."
@@ -72,7 +72,7 @@ cargo build --release
 
 ```bash
 zentinel-image-optimization-agent \
-    --socket /tmp/image-optimization.sock \
+    --socket /tmp/image-optimization-agent.sock \
     --log-level info \
     --config /etc/zentinel/image-optimization.json
 ```
@@ -91,8 +91,8 @@ zentinel-image-optimization-agent \
 ```kdl
 agents {
     agent "image-optimization" type="custom" {
-        unix-socket "/tmp/image-optimization.sock"
-        events "request_headers" "response_headers" "response_body"
+        unix-socket "/tmp/image-optimization-agent.sock"
+        events "request_headers" "response_headers" "response_body" "request_complete"
         timeout-ms 5000
         failure-mode "open"
         response-body-mode "buffer"
@@ -190,8 +190,7 @@ Client                  Zentinel Proxy              Image Optimization Agent
   │                         │──────────────────────────────►│
   │                         │  (check content-type,         │
   │                         │   negotiate format,           │
-  │                         │   set Content-Type + Vary     │
-  │                         │   headers proactively)        │
+  │                         │   set Vary, request body)     │
   │                         │◄──────────────────────────────│
   │                         │                               │
   │                         │  response_body (chunks)       │
@@ -206,7 +205,7 @@ Client                  Zentinel Proxy              Image Optimization Agent
   │◄────────────────────────│                               │
 ```
 
-Response headers (`Content-Type`, `Vary`, `X-Image-Optimized`) are set proactively during the `response_headers` phase because by the time the response body is processed, headers have already been sent to the client.
+`Vary: Accept` is set during the `response_headers` phase. `Content-Type` and `X-Image-Optimized` are set during the `response_body` phase after conversion succeeds. On conversion failure, the original `Content-Type` is preserved so clients always receive correctly-typed content.
 
 ## Response Headers
 
