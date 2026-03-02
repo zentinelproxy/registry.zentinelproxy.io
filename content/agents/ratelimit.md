@@ -16,7 +16,7 @@ license = "Apache-2.0"
 status = "deprecated"
 category = "core"
 tags = ["security", "traffic", "deprecated"]
-min_zentinel_version = "25.12.0"
+min_zentinel_version = "26.01.0"
 official = true
 author_url = "https://github.com/zentinelproxy"
 homepage = "https://zentinelproxy.io/agents/ratelimit/"
@@ -190,19 +190,23 @@ The Rate Limiter agent provides flexible traffic control using the token bucket 
 The easiest way to install this agent is via the Zentinel bundle command:
 
 ```bash
-# Install just this agent
 zentinel bundle install ratelimit
-
-# Or install all available agents
-zentinel bundle install --all
 ```
 
 The bundle command automatically downloads the correct binary for your platform and places it in `~/.zentinel/agents/`.
 
-#### Using Cargo
+#### From Source
 
 ```bash
 cargo install zentinel-agent-ratelimit
+```
+
+Or build manually:
+
+```bash
+git clone https://github.com/zentinelproxy/zentinel-agent-ratelimit
+cd zentinel-agent-ratelimit
+cargo build --release
 ```
 
 #### Using Docker

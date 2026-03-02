@@ -16,7 +16,7 @@ license = "Apache-2.0"
 status = "stable"
 category = "core"
 tags = ["security", "filtering", "core"]
-min_zentinel_version = "25.12.0"
+min_zentinel_version = "26.01.0"
 official = true
 author_url = "https://github.com/zentinelproxy"
 homepage = "https://zentinelproxy.io/agents/denylist/"
@@ -59,19 +59,23 @@ The Denylist agent provides real-time request blocking based on IP addresses, CI
 The easiest way to install this agent is via the Zentinel bundle command:
 
 ```bash
-# Install just this agent
 zentinel bundle install denylist
-
-# Or install all available agents
-zentinel bundle install --all
 ```
 
 The bundle command automatically downloads the correct binary for your platform and places it in `~/.zentinel/agents/`.
 
-### Using Cargo
+### From Source
 
 ```bash
 cargo install zentinel-agent-denylist
+```
+
+Or build manually:
+
+```bash
+git clone https://github.com/zentinelproxy/zentinel-agent-denylist
+cd zentinel-agent-denylist
+cargo build --release
 ```
 
 ### Using Docker

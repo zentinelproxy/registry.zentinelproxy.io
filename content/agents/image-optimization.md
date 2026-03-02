@@ -44,21 +44,21 @@ An image optimization agent for Zentinel that converts JPEG/PNG responses to Web
 
 ### Using Bundle (Recommended)
 
-```bash
-# Install just this agent
-zentinel bundle install image-optimization
+The easiest way to install this agent is via the Zentinel bundle command:
 
-# Or install all available agents
-zentinel bundle install --all
+```bash
+zentinel bundle install image-optimization
 ```
 
-### Using Cargo
+The bundle command automatically downloads the correct binary for your platform and places it in `~/.zentinel/agents/`.
+
+### From Source
 
 ```bash
 cargo install zentinel-agent-image-optimization
 ```
 
-### From Source
+Or build manually:
 
 ```bash
 git clone https://github.com/zentinelproxy/zentinel-agent-image-optimization

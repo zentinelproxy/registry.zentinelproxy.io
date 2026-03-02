@@ -21,7 +21,8 @@ official = true
 author_url = "https://github.com/zentinelproxy"
 homepage = "https://zentinelproxy.io/agents/auth/"
 crate_name = "zentinel-agent-auth"
-bundle_included = false
+bundle_included = true
+bundle_group = "Identity agents"
 language = "Rust"
 +++
 
@@ -64,22 +65,18 @@ The Auth agent provides comprehensive authentication and authorization for your 
 The easiest way to install this agent is via the Zentinel bundle command:
 
 ```bash
-# Install just this agent
 zentinel bundle install auth
-
-# Or install all available agents
-zentinel bundle install --all
 ```
 
 The bundle command automatically downloads the correct binary for your platform and places it in `~/.zentinel/agents/`.
 
-### Using Cargo
+### From Source
 
 ```bash
 cargo install zentinel-agent-auth
 ```
 
-### From Source
+Or build manually:
 
 ```bash
 git clone https://github.com/zentinelproxy/zentinel-agent-auth

@@ -58,19 +58,23 @@ The Lua Scripting agent enables custom request/response processing using embedde
 The easiest way to install this agent is via the Zentinel bundle command:
 
 ```bash
-# Install just this agent
 zentinel bundle install lua
-
-# Or install all available agents
-zentinel bundle install --all
 ```
 
 The bundle command automatically downloads the correct binary for your platform and places it in `~/.zentinel/agents/`.
 
-### Using Cargo
+### From Source
 
 ```bash
 cargo install zentinel-agent-lua
+```
+
+Or build manually:
+
+```bash
+git clone https://github.com/zentinelproxy/zentinel-agent-lua
+cd zentinel-agent-lua
+cargo build --release
 ```
 
 ## Quick Start

@@ -20,7 +20,8 @@ min_zentinel_version = "26.01.0"
 official = true
 author_url = "https://github.com/zentinelproxy"
 homepage = "https://zentinelproxy.io/agents/policy/"
-bundle_included = false
+bundle_included = true
+bundle_group = "Identity agents"
 language = "Haskell"
 +++
 
@@ -85,28 +86,23 @@ chmod +x opa && sudo mv opa /usr/local/bin/
 The easiest way to install this agent is via the Zentinel bundle command:
 
 ```bash
-# Install just this agent
 zentinel bundle install policy
-
-# Or install all available agents
-zentinel bundle install --all
 ```
 
 The bundle command automatically downloads the correct binary for your platform and places it in `~/.zentinel/agents/`.
 
-### Using Cabal
+### From Source
 
 ```bash
 cabal install zentinel-agent-policy
 ```
 
-### From Source
+Or build manually:
 
 ```bash
 git clone https://github.com/zentinelproxy/zentinel-agent-policy
 cd zentinel-agent-policy
 cabal build
-cabal install
 ```
 
 ## Quick Start

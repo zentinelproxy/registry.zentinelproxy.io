@@ -7,8 +7,8 @@ description = "PII protection agent with reversible tokenization, format-preserv
 
 [extra]
 name = "data-masking"
-version = "0.5.11"
-repository = "zentinelproxy/zentinel"
+version = "0.5.0"
+repository = "zentinelproxy/zentinel-agent-data-masking"
 binary_name = "zentinel-data-masking-agent"
 description = "PII protection agent with reversible tokenization, format-preserving encryption, and pattern-based masking for JSON, XML, and form data."
 author = "Zentinel Core Team"
@@ -21,7 +21,8 @@ official = true
 author_url = "https://github.com/zentinelproxy"
 homepage = "https://zentinelproxy.io/agents/data-masking/"
 crate_name = "zentinel-data-masking-agent"
-bundle_included = false
+bundle_included = true
+bundle_group = "Security agents"
 language = "Rust"
 +++
 
@@ -49,26 +50,22 @@ The agent intercepts request and response bodies, detects sensitive fields using
 The easiest way to install this agent is via the Zentinel bundle command:
 
 ```bash
-# Install just this agent
 zentinel bundle install data-masking
-
-# Or install all available agents
-zentinel bundle install --all
 ```
 
 The bundle command automatically downloads the correct binary for your platform and places it in `~/.zentinel/agents/`.
 
-### Using Cargo
+### From Source
 
 ```bash
 cargo install zentinel-data-masking-agent
 ```
 
-### From Source
+Or build manually:
 
 ```bash
-git clone https://github.com/zentinelproxy/zentinel
-cd zentinel/agents/data-masking
+git clone https://github.com/zentinelproxy/zentinel-agent-data-masking
+cd zentinel-agent-data-masking
 cargo build --release
 ```
 

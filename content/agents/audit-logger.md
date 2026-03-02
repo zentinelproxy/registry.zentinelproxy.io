@@ -16,7 +16,7 @@ license = "Apache-2.0"
 status = "stable"
 category = "utility"
 tags = ["logging", "compliance", "security", "audit"]
-min_zentinel_version = "25.12.0"
+min_zentinel_version = "26.01.0"
 official = true
 author_url = "https://github.com/zentinelproxy"
 homepage = "https://zentinelproxy.io/agents/audit-logger/"
@@ -63,22 +63,18 @@ As of v0.2.0, the Audit Logger agent supports protocol v2 with:
 The easiest way to install this agent is via the Zentinel bundle command:
 
 ```bash
-# Install just this agent
 zentinel bundle install audit-logger
-
-# Or install all available agents
-zentinel bundle install --all
 ```
 
 The bundle command automatically downloads the correct binary for your platform and places it in `~/.zentinel/agents/`.
 
-### Using Cargo
+### From Source
 
 ```bash
 cargo install zentinel-agent-audit-logger
 ```
 
-### From Source
+Or build manually:
 
 ```bash
 git clone https://github.com/zentinelproxy/zentinel-agent-audit-logger

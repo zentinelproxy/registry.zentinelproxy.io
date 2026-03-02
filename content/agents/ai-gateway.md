@@ -21,7 +21,8 @@ official = true
 author_url = "https://github.com/zentinelproxy"
 homepage = "https://zentinelproxy.io/agents/ai-gateway/"
 crate_name = "zentinel-agent-ai-gateway"
-bundle_included = false
+bundle_included = true
+bundle_group = "API security agents"
 language = "Rust"
 +++
 
@@ -100,22 +101,18 @@ Analyze and filter LLM responses before they reach the client:
 The easiest way to install this agent is via the Zentinel bundle command:
 
 ```bash
-# Install just this agent
 zentinel bundle install ai-gateway
-
-# Or install all available agents
-zentinel bundle install --all
 ```
 
 The bundle command automatically downloads the correct binary for your platform and places it in `~/.zentinel/agents/`.
 
-### Using Cargo
+### From Source
 
 ```bash
 cargo install zentinel-agent-ai-gateway
 ```
 
-### From Source
+Or build manually:
 
 ```bash
 git clone https://github.com/zentinelproxy/zentinel-agent-ai-gateway

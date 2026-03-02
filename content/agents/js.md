@@ -16,7 +16,7 @@ license = "Apache-2.0"
 status = "stable"
 category = "scripting"
 tags = ["scripting", "javascript", "extensibility"]
-min_zentinel_version = "25.12.0"
+min_zentinel_version = "26.01.0"
 official = true
 author_url = "https://github.com/zentinelproxy"
 homepage = "https://zentinelproxy.io/agents/js/"
@@ -57,19 +57,23 @@ JavaScript scripting agent for Zentinel reverse proxy. Write custom request/resp
 The easiest way to install this agent is via the Zentinel bundle command:
 
 ```bash
-# Install just this agent
 zentinel bundle install js
-
-# Or install all available agents
-zentinel bundle install --all
 ```
 
 The bundle command automatically downloads the correct binary for your platform and places it in `~/.zentinel/agents/`.
 
-### Using Cargo
+### From Source
 
 ```bash
 cargo install zentinel-agent-js
+```
+
+Or build manually:
+
+```bash
+git clone https://github.com/zentinelproxy/zentinel-agent-js
+cd zentinel-agent-js
+cargo build --release
 ```
 
 ## Configuration

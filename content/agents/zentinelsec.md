@@ -112,19 +112,23 @@ See [full benchmarks](/benchmarks/#rust-vs-c-zentinel-modsec-vs-libmodsecurity) 
 The easiest way to install this agent is via the Zentinel bundle command:
 
 ```bash
-# Install just this agent
 zentinel bundle install zentinelsec
-
-# Or install all available agents
-zentinel bundle install --all
 ```
 
 The bundle command automatically downloads the correct binary for your platform and places it in `~/.zentinel/agents/`.
 
-### Using Cargo
+### From Source
 
 ```bash
 cargo install zentinel-agent-zentinelsec
+```
+
+Or build manually:
+
+```bash
+git clone https://github.com/zentinelproxy/zentinel-agent-zentinelsec
+cd zentinel-agent-zentinelsec
+cargo build --release
 ```
 
 ## Configuration

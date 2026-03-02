@@ -16,7 +16,7 @@ license = "Apache-2.0"
 status = "stable"
 category = "security"
 tags = ["security", "waf", "modsecurity", "owasp", "crs"]
-min_zentinel_version = "25.12.0"
+min_zentinel_version = "26.01.0"
 official = true
 author_url = "https://github.com/zentinelproxy"
 homepage = "https://zentinelproxy.io/agents/modsec/"
@@ -73,19 +73,23 @@ apt install libmodsecurity-dev
 The easiest way to install this agent is via the Zentinel bundle command:
 
 ```bash
-# Install just this agent
 zentinel bundle install modsec
-
-# Or install all available agents
-zentinel bundle install --all
 ```
 
 The bundle command automatically downloads the correct binary for your platform and places it in `~/.zentinel/agents/`.
 
-### Using Cargo
+### From Source
 
 ```bash
 cargo install zentinel-agent-modsec
+```
+
+Or build manually:
+
+```bash
+git clone https://github.com/zentinelproxy/zentinel-agent-modsec
+cd zentinel-agent-modsec
+cargo build --release
 ```
 
 ## Configuration
@@ -193,12 +197,12 @@ SecAction "id:900000,phase:1,pass,t:none,nolog,setvar:tx.blocking_paranoia_level
 
 | Feature | ModSecurity | WAF |
 |---------|-------------|-----|
-| Detection Rules | 800+ CRS rules | ~20 regex rules |
+| Detection Rules | 800+ CRS rules | 285 Rust rules |
 | SecLang Support | Yes | No |
 | Custom Rules | Yes | No |
 | Dependencies | libmodsecurity (C) | Pure Rust |
 | Binary Size | ~50MB | ~5MB |
-| Installation | Requires libmodsecurity | `cargo install` |
+| Installation | Requires libmodsecurity | `zentinel bundle install` |
 
 **Use ModSecurity when:**
 - You need full OWASP CRS compatibility
@@ -206,9 +210,9 @@ SecAction "id:900000,phase:1,pass,t:none,nolog,setvar:tx.blocking_paranoia_level
 - You require comprehensive protection
 
 **Use [WAF agent](/agents/waf/) when:**
-- You want zero-dependency deployment
-- You need low latency and minimal resources
-- Basic attack detection is sufficient
+- You want zero-dependency deployment (pure Rust)
+- You need sub-microsecond latency with minimal resources
+- You want statistical anomaly detection and API security features
 
 ## Related Agents
 

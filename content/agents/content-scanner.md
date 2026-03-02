@@ -20,6 +20,7 @@ min_zentinel_version = "26.01.0"
 official = true
 author_url = "https://github.com/zentinelproxy"
 homepage = "https://zentinelproxy.io/agents/content-scanner/"
+crate_name = "zentinel-agent-content-scanner"
 bundle_included = true
 bundle_group = "Security agents"
 language = "Rust"
@@ -60,16 +61,18 @@ The Content Scanner agent scans uploaded files and request bodies for malware us
 The easiest way to install this agent is via the Zentinel bundle command:
 
 ```bash
-# Install just this agent
 zentinel bundle install content-scanner
-
-# Or install all available agents
-zentinel bundle install --all
 ```
 
 The bundle command automatically downloads the correct binary for your platform and places it in `~/.zentinel/agents/`.
 
 ### From Source
+
+```bash
+cargo install zentinel-agent-content-scanner
+```
+
+Or build manually:
 
 ```bash
 git clone https://github.com/zentinelproxy/zentinel-agent-content-scanner
