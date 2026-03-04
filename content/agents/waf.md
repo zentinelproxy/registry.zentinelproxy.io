@@ -668,18 +668,20 @@ GET /health
 
 ## Comparison with ModSecurity Agent
 
-| Feature | WAF | ModSecurity |
-|---------|-----|-------------|
-| Detection Rules | 285 | 800+ CRS |
-| Statistical Detection | Yes | No |
-| Anomaly Scoring | Yes | Yes |
-| API Security | GraphQL, JWT, Schema | Basic |
-| Bot Detection | Behavioral | UA only |
-| Threat Intel | Yes | No |
-| SecLang Support | No | Yes |
-| Dependencies | Pure Rust | libmodsecurity |
-| Binary Size | ~6MB | ~50MB |
-| Latency p99 | <5µs | ~15ms |
+| Feature | WAF | ZentinelSec | ModSecurity |
+|---------|-----|-------------|-------------|
+| Detection Rules | 285 | 800+ CRS | 800+ CRS |
+| Statistical Detection | Yes | No | No |
+| Anomaly Scoring | Built-in | Via CRS | Via CRS |
+| API Security | GraphQL, JWT, Schema | No | Basic |
+| Bot Detection | Behavioral | No | UA only |
+| Threat Intel | Yes | No | No |
+| SecLang Support | No | Yes | Yes |
+| Dependencies | Pure Rust | Pure Rust | libmodsecurity (C) |
+| Binary Size | ~6MB | ~10MB | ~50MB |
+| Latency p99 | <5µs | <1µs | ~15ms |
+
+> Independent testing with [wafworth](https://zentinelproxy.io/blog/waf-agent-comparison/) (598 test cases, 18 OWASP categories) found the WAF agent achieved the highest detection rate (43.1%) across all three engines, with anomaly scoring and statistical classification reducing false positives compared to pattern-only approaches.
 
 **Use WAF when:**
 - You want statistical anomaly detection with low false positives
@@ -687,10 +689,13 @@ GET /health
 - You want zero-dependency deployment
 - You need bot detection and threat intelligence
 
+**Use [ZentinelSec](/agents/zentinelsec/) when:**
+- You need full OWASP CRS compatibility (800+ rules) without C dependencies
+- You want the best balanced accuracy and lowest false positive rate
+
 **Use [ModSecurity](/agents/modsec/) when:**
-- You need full OWASP CRS compatibility (800+ rules)
-- You have existing ModSecurity/SecLang rules
-- You require the full SecLang rule language
+- You need maximum compatibility with existing ModSecurity deployments
+- You have complex custom SecLang rules that require libmodsecurity-specific features
 
 ## False Positive Handling
 

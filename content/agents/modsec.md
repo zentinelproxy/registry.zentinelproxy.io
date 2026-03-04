@@ -40,7 +40,7 @@ As of v0.2.0, the ModSecurity agent supports protocol v2 with:
 
 ModSecurity WAF agent for Zentinel reverse proxy. Provides full OWASP Core Rule Set (CRS) support via libmodsecurity bindings with 800+ detection rules.
 
-> **Note:** This agent requires libmodsecurity installed on your system. For a lightweight, zero-dependency alternative with basic detection rules, see [WAF agent](/agents/waf/).
+> **Note:** This agent requires libmodsecurity installed on your system. For a zero-dependency alternative with anomaly scoring, API security, and bot detection, see [WAF agent](/agents/waf/).
 
 ## Features
 
@@ -200,9 +200,13 @@ SecAction "id:900000,phase:1,pass,t:none,nolog,setvar:tx.blocking_paranoia_level
 | Detection Rules | 800+ CRS rules | 285 Rust rules |
 | SecLang Support | Yes | No |
 | Custom Rules | Yes | No |
+| Anomaly Scoring | Via CRS | Built-in |
+| API Security | Basic | GraphQL, JWT, Schema |
 | Dependencies | libmodsecurity (C) | Pure Rust |
 | Binary Size | ~50MB | ~5MB |
 | Installation | Requires libmodsecurity | `zentinel bundle install` |
+
+> Independent testing with [wafworth](https://zentinelproxy.io/blog/waf-agent-comparison/) (598 test cases, 18 OWASP categories) compared all three WAF engines. See the [full comparison](https://zentinelproxy.io/blog/waf-agent-comparison/) for detection rates, false positive rates, and per-category breakdowns.
 
 **Use ModSecurity when:**
 - You need full OWASP CRS compatibility
@@ -210,9 +214,9 @@ SecAction "id:900000,phase:1,pass,t:none,nolog,setvar:tx.blocking_paranoia_level
 - You require comprehensive protection
 
 **Use [WAF agent](/agents/waf/) when:**
-- You want zero-dependency deployment (pure Rust)
+- You want anomaly scoring, API security (GraphQL, JWT, schema validation), and bot detection
+- You want zero-dependency deployment (pure Rust, ~5MB binary)
 - You need sub-microsecond latency with minimal resources
-- You want statistical anomaly detection and API security features
 
 ## Related Agents
 

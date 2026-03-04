@@ -100,10 +100,14 @@ See [full benchmarks](/benchmarks/#rust-vs-c-zentinel-modsec-vs-libmodsecurity) 
 | Detection Rules | 800+ CRS rules | 800+ CRS rules | 285 rules |
 | SecLang Support | Yes | Yes | No |
 | @detectSQLi/@detectXSS | Yes (pure Rust) | Yes (C lib) | No |
+| Anomaly Scoring | Via CRS | Via CRS | Built-in |
+| API Security | No | No | GraphQL, JWT, Schema |
 | Dependencies | **Pure Rust** | libmodsecurity (C) | Pure Rust |
-| Performance | **6.2M req/s** | 207K req/s | (varies) |
+| Performance | **6.2M req/s** | 207K req/s | 1.6M req/s |
 | Binary Size | ~10MB | ~50MB | ~5MB |
 | Installation | `cargo install` | Requires libmodsecurity | `cargo install` |
+
+> Independent testing with [wafworth](https://zentinelproxy.io/blog/waf-agent-comparison/) (598 test cases, 18 OWASP categories) found ZentinelSec achieved the best balanced accuracy (68.1%) and lowest false positive rate (2.5%) across all three engines.
 
 ## Installation
 
@@ -246,8 +250,8 @@ SecAction "id:900000,phase:1,pass,t:none,nolog,setvar:tx.blocking_paranoia_level
 - You have complex custom rules that require libmodsecurity-specific features
 
 **Use [WAF agent](/agents/waf/) when:**
-- You want minimal overhead (~5MB binary)
-- Basic attack detection is sufficient
+- You want anomaly scoring, API security (GraphQL, JWT, schema validation), and bot detection
+- You want zero-dependency deployment (~5MB binary)
 - You don't need SecLang rule files
 
 ## Related Agents
