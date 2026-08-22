@@ -10,6 +10,8 @@ name = "denylist"
 version = "0.3.0"
 repository = "zentinelproxy/zentinel-agent-denylist"
 binary_name = "zentinel-denylist-agent"
+install_cmd = "zentinel bundle install denylist"
+protocol_version = "v2"
 description = "Block requests based on IP addresses, CIDR ranges, or custom patterns with real-time updates."
 author = "Zentinel Core Team"
 license = "Apache-2.0"
@@ -20,7 +22,6 @@ min_zentinel_version = "26.01.0"
 official = true
 author_url = "https://github.com/zentinelproxy"
 homepage = "https://zentinelproxy.io/agents/denylist/"
-crate_name = "zentinel-agent-denylist"
 bundle_included = true
 bundle_group = "Core agents"
 language = "Rust"
@@ -66,17 +67,13 @@ The bundle command automatically downloads the correct binary for your platform 
 
 ### From Source
 
-```bash
-cargo install zentinel-agent-denylist
-```
-
-Or build manually:
+`zentinel-agent-denylist` is not published on crates.io, so `cargo install
+zentinel-agent-denylist` does not work. Install from the repository instead:
 
 ```bash
-git clone https://github.com/zentinelproxy/zentinel-agent-denylist
-cd zentinel-agent-denylist
-cargo build --release
+cargo install --git https://github.com/zentinelproxy/zentinel-agent-denylist
 ```
+
 
 ### Using Docker
 

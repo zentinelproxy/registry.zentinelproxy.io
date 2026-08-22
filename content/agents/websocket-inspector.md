@@ -10,6 +10,8 @@ name = "websocket-inspector"
 version = "0.4.0"
 repository = "zentinelproxy/zentinel-agent-websocket-inspector"
 binary_name = "zentinel-websocket-inspector-agent"
+install_cmd = "zentinel bundle install websocket-inspector"
+protocol_version = "v2"
 description = "Security analysis for WebSocket frames: content filtering, schema validation, and attack detection for real-time connections."
 author = "Zentinel Core Team"
 license = "Apache-2.0"
@@ -20,7 +22,6 @@ min_zentinel_version = "26.01.0"
 official = true
 author_url = "https://github.com/zentinelproxy"
 homepage = "https://zentinelproxy.io/agents/websocket-inspector/"
-crate_name = "zentinel-agent-websocket-inspector"
 bundle_included = true
 bundle_group = "Protocol agents"
 language = "Rust"
@@ -138,23 +139,19 @@ The bundle command automatically downloads the correct binary for your platform 
 
 ### From Source
 
-```bash
-cargo install zentinel-agent-websocket-inspector
-```
-
-Or build manually:
+`zentinel-agent-websocket-inspector` is not published on crates.io, so `cargo install
+zentinel-agent-websocket-inspector` does not work. Install from the repository instead:
 
 ```bash
-git clone https://github.com/zentinelproxy/zentinel-agent-websocket-inspector
-cd zentinel-agent-websocket-inspector
-cargo build --release
+cargo install --git https://github.com/zentinelproxy/zentinel-agent-websocket-inspector
 ```
+
 
 ## Quick Start
 
 ```bash
 # Install
-cargo install zentinel-agent-websocket-inspector
+cargo install --git https://github.com/zentinelproxy/zentinel-agent-websocket-inspector
 
 # Run with defaults (XSS, SQLi, command injection detection enabled)
 zentinel-ws-agent --socket /tmp/zentinel-ws.sock

@@ -10,6 +10,8 @@ name = "graphql-security"
 version = "0.4.0"
 repository = "zentinelproxy/zentinel-agent-graphql-security"
 binary_name = "zentinel-graphql-security-agent"
+install_cmd = "zentinel bundle install graphql-security"
+protocol_version = "v2"
 description = "GraphQL-specific security controls including query depth limiting, complexity analysis, introspection control, and field-level authorization."
 author = "Zentinel Core Team"
 license = "Apache-2.0"
@@ -20,7 +22,6 @@ min_zentinel_version = "26.01.0"
 official = true
 author_url = "https://github.com/zentinelproxy"
 homepage = "https://zentinelproxy.io/agents/graphql-security/"
-crate_name = "zentinel-agent-graphql-security"
 bundle_included = true
 bundle_group = "API security agents"
 language = "Rust"
@@ -67,17 +68,13 @@ The bundle command automatically downloads the correct binary for your platform 
 
 ### From Source
 
-```bash
-cargo install zentinel-agent-graphql-security
-```
-
-Or build manually:
+`zentinel-agent-graphql-security` is not published on crates.io, so `cargo install
+zentinel-agent-graphql-security` does not work. Install from the repository instead:
 
 ```bash
-git clone https://github.com/zentinelproxy/zentinel-agent-graphql-security
-cd zentinel-agent-graphql-security
-cargo build --release
+cargo install --git https://github.com/zentinelproxy/zentinel-agent-graphql-security
 ```
+
 
 ## Configuration
 

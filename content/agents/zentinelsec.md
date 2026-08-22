@@ -10,6 +10,8 @@ name = "zentinelsec"
 version = "0.3.0"
 repository = "zentinelproxy/zentinel-agent-zentinelsec"
 binary_name = "zentinel-zentinelsec-agent"
+install_cmd = "zentinel bundle install zentinelsec"
+protocol_version = "v2"
 description = "Pure Rust ModSecurity-compatible WAF with full OWASP CRS support - no C dependencies required."
 author = "Zentinel Core Team"
 license = "Apache-2.0"
@@ -20,7 +22,6 @@ min_zentinel_version = "26.01.0"
 official = true
 author_url = "https://github.com/zentinelproxy"
 homepage = "https://zentinelproxy.io/agents/zentinelsec/"
-crate_name = "zentinel-agent-zentinelsec"
 bundle_included = true
 bundle_group = "Security agents"
 language = "Rust"
@@ -53,34 +54,34 @@ ZentinelSec is a pure Rust ModSecurity-compatible WAF agent for Zentinel. It pro
 - **Block or Detect-Only Mode**: Monitor before blocking
 - **Zero Installation Hassle**: Just `cargo install`, no system dependencies
 
-## Performance: 10-30x Faster than C++
+## Performance: 4-13x Faster than C++
 
-ZentinelSec uses the [zentinel-modsec](https://docs.zentinelproxy.io/zentinel-modsec/) engine, a pure Rust implementation that **outperforms the C++ libmodsecurity by 10-30x**.
+ZentinelSec uses the [zentinel-modsec](https://docs.zentinelproxy.io/zentinel-modsec/) engine, a pure Rust implementation that **outperforms the C++ libmodsecurity by 4-13x**, depending on workload.
 
 <div class="stats-grid">
     <div class="stat-card">
-        <div class="stat-value stat-value--success">30x</div>
+        <div class="stat-value stat-value--success">4.4x</div>
         <div class="stat-label">Faster</div>
         <div class="stat-detail">Clean requests</div>
     </div>
     <div class="stat-card">
-        <div class="stat-value stat-value--success">18x</div>
+        <div class="stat-value stat-value--success">12.9x</div>
         <div class="stat-label">Faster</div>
         <div class="stat-detail">Attack detection</div>
     </div>
     <div class="stat-card">
-        <div class="stat-value stat-value--success">6.2M</div>
+        <div class="stat-value stat-value--success">797K</div>
         <div class="stat-label">Requests/sec</div>
-        <div class="stat-detail">vs 207K for libmodsec</div>
+        <div class="stat-detail">vs 177K for libmodsec</div>
     </div>
 </div>
 
 | Benchmark | ZentinelSec (Rust) | libmodsecurity (C++) | Speedup |
 |-----------|--------------------|-----------------------|---------|
-| Clean request | 161 ns | 4,831 ns | **30x faster** |
-| SQLi detection | 295 ns | 5,545 ns | **19x faster** |
-| Body processing | 1.24 µs | 12.93 µs | **10x faster** |
-| Rule parsing | 2.75 µs | 10.07 µs | **3.6x faster** |
+| Clean request | 1.20 µs | 5.31 µs | **4.4x faster** |
+| SQLi detection | 1.15 µs | 14.90 µs | **12.9x faster** |
+| Body processing | 1.29 µs | 12.11 µs | **9.4x faster** |
+| Rule parsing | 2.58 µs | 10.20 µs | **4.0x faster** |
 
 **Why is Rust faster?**
 - Zero-copy parsing with `Cow<str>`
@@ -89,7 +90,9 @@ ZentinelSec uses the [zentinel-modsec](https://docs.zentinelproxy.io/zentinel-mo
 - Aho-Corasick for multi-pattern matching
 - No FFI overhead or cross-language memory allocation
 
-> Benchmarks measured with Criterion on the zentinel-modsec library. Measured on Apple M2 Pro, single core. Run `cargo bench` in the [zentinel-modsec repo](https://github.com/zentinelproxy/zentinel-modsec) to reproduce.
+> Benchmarks measured with Criterion on the zentinel-modsec library, single core, against libmodsecurity 3.0.16. Run `cargo bench --features libmodsec-compare` in the [zentinel-modsec repo](https://github.com/zentinelproxy/zentinel-modsec) to reproduce.
+>
+> These figures were revised downward in August 2026. The earlier numbers came from a benchmark whose measured section never executed the detection rules — see [zentinel-modsec#15](https://github.com/zentinelproxy/zentinel-modsec/issues/15) and the fix in [#16](https://github.com/zentinelproxy/zentinel-modsec/pull/16).
 
 See [full benchmarks](/benchmarks/#rust-vs-c-zentinel-modsec-vs-libmodsecurity) for details.
 
@@ -103,9 +106,9 @@ See [full benchmarks](/benchmarks/#rust-vs-c-zentinel-modsec-vs-libmodsecurity) 
 | Anomaly Scoring | Via CRS | Via CRS | Built-in |
 | API Security | No | No | GraphQL, JWT, Schema |
 | Dependencies | **Pure Rust** | libmodsecurity (C) | Pure Rust |
-| Performance | **6.2M req/s** | 207K req/s | 1.6M req/s |
+| Performance | **797K req/s** | 177K req/s | 1.6M req/s |
 | Binary Size | ~10MB | ~50MB | ~5MB |
-| Installation | `cargo install` | Requires libmodsecurity | `cargo install` |
+| Installation | `zentinel bundle install zentinelsec` | Requires libmodsecurity | `zentinel bundle install waf` |
 
 > Independent testing with [wafworth](https://zentinelproxy.io/blog/waf-agent-comparison/) (598 test cases, 18 OWASP categories) found ZentinelSec achieved the best balanced accuracy (68.1%) and lowest false positive rate (2.5%) across all three engines.
 
@@ -123,17 +126,13 @@ The bundle command automatically downloads the correct binary for your platform 
 
 ### From Source
 
-```bash
-cargo install zentinel-agent-zentinelsec
-```
-
-Or build manually:
+`zentinel-agent-zentinelsec` is not published on crates.io, so `cargo install
+zentinel-agent-zentinelsec` does not work. Install from the repository instead:
 
 ```bash
-git clone https://github.com/zentinelproxy/zentinel-agent-zentinelsec
-cd zentinel-agent-zentinelsec
-cargo build --release
+cargo install --git https://github.com/zentinelproxy/zentinel-agent-zentinelsec
 ```
+
 
 ## Configuration
 

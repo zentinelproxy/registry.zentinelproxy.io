@@ -10,6 +10,8 @@ name = "waf"
 version = "0.3.0"
 repository = "zentinelproxy/zentinel-agent-waf"
 binary_name = "zentinel-waf-agent"
+install_cmd = "zentinel bundle install waf"
+protocol_version = "v2"
 description = "Pure Rust WAF with 285 detection rules, anomaly scoring, API security, schema validation, bot protection, and n-gram based payload analysis."
 author = "Zentinel Core Team"
 license = "Apache-2.0"
@@ -20,7 +22,6 @@ min_zentinel_version = "26.01.0"
 official = true
 author_url = "https://github.com/zentinelproxy"
 homepage = "https://zentinelproxy.io/agents/waf/"
-crate_name = "zentinel-agent-waf"
 bundle_included = true
 bundle_group = "Core agents"
 language = "Rust"
@@ -127,17 +128,19 @@ The bundle command automatically downloads the correct binary for your platform 
 
 ### From Source
 
-```bash
-cargo install zentinel-agent-waf
-```
+`zentinel-agent-waf` is not published on crates.io, and it depends on
+the protocol crate through a path dependency, so neither `cargo install`
+nor `cargo install --git` works. Build it with the
+[zentinel](https://github.com/zentinelproxy/zentinel) repository checked out
+**next to** it:
 
-Or build manually:
-
 ```bash
+git clone https://github.com/zentinelproxy/zentinel
 git clone https://github.com/zentinelproxy/zentinel-agent-waf
 cd zentinel-agent-waf
 cargo build --release
 ```
+
 
 ### With Schema Validation
 

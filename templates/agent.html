@@ -58,17 +58,12 @@
             </div>
 
             <aside class="agent-detail-sidebar">
-                {% if page.extra.crate_name %}
+                {% if page.extra.install_cmd %}
                 <div class="sidebar-card">
                     <h3>Install</h3>
                     <div class="sidebar-install">
-                        <code>cargo install {{ page.extra.crate_name }}</code>
+                        <code>{{ page.extra.install_cmd }}</code>
                     </div>
-                    {% if page.extra.bundle_included %}
-                    <div class="sidebar-install">
-                        <code>zentinel bundle install {{ page.extra.name }}</code>
-                    </div>
-                    {% endif %}
                 </div>
                 {% elif page.extra.bundle_included %}
                 <div class="sidebar-card">
@@ -109,10 +104,12 @@
                         <span class="sidebar-value">{{ page.extra.language }}</span>
                     </div>
                     {% endif %}
+                    {% if page.extra.protocol_version %}
                     <div class="sidebar-item">
                         <span class="sidebar-label">Protocol</span>
                         <span class="sidebar-value">{{ page.extra.protocol_version }}</span>
                     </div>
+                    {% endif %}
                     <div class="sidebar-item">
                         <span class="sidebar-label">Min Zentinel</span>
                         <span class="sidebar-value">{{ page.extra.min_zentinel_version }}</span>

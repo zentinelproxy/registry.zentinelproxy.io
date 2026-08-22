@@ -10,6 +10,8 @@ name = "transform"
 version = "0.4.0"
 repository = "zentinelproxy/zentinel-agent-transform"
 binary_name = "zentinel-transform-agent"
+install_cmd = "zentinel bundle install transform"
+protocol_version = "v2"
 description = "Advanced request and response transformation with URL rewriting, header manipulation, and JSON body transforms."
 author = "Zentinel Core Team"
 license = "Apache-2.0"
@@ -20,7 +22,6 @@ min_zentinel_version = "26.01.0"
 official = true
 author_url = "https://github.com/zentinelproxy"
 homepage = "https://zentinelproxy.io/agents/transform/"
-crate_name = "zentinel-agent-transform"
 bundle_included = true
 bundle_group = "Utility agents"
 language = "Rust"
@@ -64,17 +65,13 @@ The bundle command automatically downloads the correct binary for your platform 
 
 ### From Source
 
-```bash
-cargo install zentinel-agent-transform
-```
-
-Or build manually:
+`zentinel-agent-transform` is not published on crates.io, so `cargo install
+zentinel-agent-transform` does not work. Install from the repository instead:
 
 ```bash
-git clone https://github.com/zentinelproxy/zentinel-agent-transform
-cd zentinel-agent-transform
-cargo build --release
+cargo install --git https://github.com/zentinelproxy/zentinel-agent-transform
 ```
+
 
 ## Configuration
 

@@ -7,9 +7,10 @@ description = "PII protection agent with reversible tokenization, format-preserv
 
 [extra]
 name = "data-masking"
-version = "0.5.0"
-repository = "zentinelproxy/zentinel-agent-data-masking"
+version = "0.6.1"
+repository = "zentinelproxy/zentinel"
 binary_name = "zentinel-data-masking-agent"
+protocol_version = "v2"
 description = "PII protection agent with reversible tokenization, format-preserving encryption, and pattern-based masking for JSON, XML, and form data."
 author = "Zentinel Core Team"
 license = "MIT/Apache-2.0"
@@ -20,8 +21,7 @@ min_zentinel_version = "26.01.0"
 official = true
 author_url = "https://github.com/zentinelproxy"
 homepage = "https://zentinelproxy.io/agents/data-masking/"
-crate_name = "zentinel-data-masking-agent"
-bundle_included = true
+bundle_included = false
 bundle_group = "Security agents"
 language = "Rust"
 +++
@@ -45,29 +45,23 @@ The agent intercepts request and response bodies, detects sensitive fields using
 
 ## Installation
 
-### Using Bundle (Recommended)
+### Using Bundle
 
-The easiest way to install this agent is via the Zentinel bundle command:
-
-```bash
-zentinel bundle install data-masking
-```
-
-The bundle command automatically downloads the correct binary for your platform and places it in `~/.zentinel/agents/`.
+**Not available for this agent.** It is not part of the distribution bundle, so `zentinel bundle install` cannot fetch it. Build it from source as below.
 
 ### From Source
 
-```bash
-cargo install zentinel-data-masking-agent
-```
-
-Or build manually:
+This agent ships **inside the zentinel monorepo** rather than its own repository —
+it is the workspace member `agents/data-masking`. It is not published on
+crates.io, so `cargo install zentinel-data-masking-agent` does not work.
 
 ```bash
-git clone https://github.com/zentinelproxy/zentinel-agent-data-masking
-cd zentinel-agent-data-masking
-cargo build --release
+git clone https://github.com/zentinelproxy/zentinel
+cd zentinel
+cargo build --release -p zentinel-data-masking-agent
+# binary at target/release/zentinel-data-masking-agent
 ```
+
 
 ## Configuration
 

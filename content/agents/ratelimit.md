@@ -10,6 +10,8 @@ name = "ratelimit"
 version = "0.3.0"
 repository = "zentinelproxy/zentinel-agent-ratelimit"
 binary_name = "zentinel-ratelimit-agent"
+install_cmd = "zentinel bundle install ratelimit"
+protocol_version = "v2"
 description = "Token bucket rate limiting with configurable windows and limits per route, IP, or custom keys."
 author = "Zentinel Core Team"
 license = "Apache-2.0"
@@ -20,7 +22,6 @@ min_zentinel_version = "26.01.0"
 official = true
 author_url = "https://github.com/zentinelproxy"
 homepage = "https://zentinelproxy.io/agents/ratelimit/"
-crate_name = "zentinel-agent-ratelimit"
 bundle_included = true
 bundle_group = "Core agents"
 language = "Rust"
@@ -197,17 +198,13 @@ The bundle command automatically downloads the correct binary for your platform 
 
 #### From Source
 
-```bash
-cargo install zentinel-agent-ratelimit
-```
-
-Or build manually:
+`zentinel-agent-ratelimit` is not published on crates.io, so `cargo install
+zentinel-agent-ratelimit` does not work. Install from the repository instead:
 
 ```bash
-git clone https://github.com/zentinelproxy/zentinel-agent-ratelimit
-cd zentinel-agent-ratelimit
-cargo build --release
+cargo install --git https://github.com/zentinelproxy/zentinel-agent-ratelimit
 ```
+
 
 #### Using Docker
 

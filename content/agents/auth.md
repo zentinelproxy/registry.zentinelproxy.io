@@ -10,6 +10,8 @@ name = "auth"
 version = "0.2.0"
 repository = "zentinelproxy/zentinel-agent-auth"
 binary_name = "zentinel-auth-agent"
+install_cmd = "cargo install --git https://github.com/zentinelproxy/zentinel-agent-auth"
+protocol_version = "v2"
 description = "Authentication and authorization agent supporting JWT, OIDC, API keys, Basic auth, SAML SSO, mTLS, Cedar policies, and token exchange."
 author = "Zentinel Core Team"
 license = "Apache-2.0"
@@ -20,8 +22,7 @@ min_zentinel_version = "26.01.0"
 official = true
 author_url = "https://github.com/zentinelproxy"
 homepage = "https://zentinelproxy.io/agents/auth/"
-crate_name = "zentinel-agent-auth"
-bundle_included = true
+bundle_included = false
 bundle_group = "Identity agents"
 language = "Rust"
 +++
@@ -60,29 +61,19 @@ The Auth agent provides comprehensive authentication and authorization for your 
 
 ## Installation
 
-### Using Bundle (Recommended)
+### Using Bundle
 
-The easiest way to install this agent is via the Zentinel bundle command:
-
-```bash
-zentinel bundle install auth
-```
-
-The bundle command automatically downloads the correct binary for your platform and places it in `~/.zentinel/agents/`.
+**Not available for this agent.** It is not part of the distribution bundle, so `zentinel bundle install` cannot fetch it. Build it from source as below.
 
 ### From Source
 
-```bash
-cargo install zentinel-agent-auth
-```
-
-Or build manually:
+`zentinel-agent-auth` is not published on crates.io, so `cargo install
+zentinel-agent-auth` does not work. Install from the repository instead:
 
 ```bash
-git clone https://github.com/zentinelproxy/zentinel-agent-auth
-cd zentinel-agent-auth
-cargo build --release
+cargo install --git https://github.com/zentinelproxy/zentinel-agent-auth
 ```
+
 
 ## Quick Start
 

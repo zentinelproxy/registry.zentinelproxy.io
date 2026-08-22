@@ -10,6 +10,8 @@ name = "audit-logger"
 version = "0.4.0"
 repository = "zentinelproxy/zentinel-agent-audit-logger"
 binary_name = "zentinel-audit-logger-agent"
+install_cmd = "zentinel bundle install audit-logger"
+protocol_version = "v2"
 description = "Structured audit logging agent with PII redaction, multiple formats (JSON, CEF, LEEF), and compliance templates for SOC2, HIPAA, PCI, and GDPR."
 author = "Zentinel Core Team"
 license = "Apache-2.0"
@@ -20,7 +22,6 @@ min_zentinel_version = "26.01.0"
 official = true
 author_url = "https://github.com/zentinelproxy"
 homepage = "https://zentinelproxy.io/agents/audit-logger/"
-crate_name = "zentinel-agent-audit-logger"
 bundle_included = true
 bundle_group = "Utility agents"
 language = "Rust"
@@ -70,17 +71,19 @@ The bundle command automatically downloads the correct binary for your platform 
 
 ### From Source
 
-```bash
-cargo install zentinel-agent-audit-logger
-```
+`zentinel-agent-audit-logger` is not published on crates.io, and it depends on
+the protocol crate through a path dependency, so neither `cargo install`
+nor `cargo install --git` works. Build it with the
+[zentinel](https://github.com/zentinelproxy/zentinel) repository checked out
+**next to** it:
 
-Or build manually:
-
 ```bash
+git clone https://github.com/zentinelproxy/zentinel
 git clone https://github.com/zentinelproxy/zentinel-agent-audit-logger
 cd zentinel-agent-audit-logger
 cargo build --release
 ```
+
 
 ## Configuration
 

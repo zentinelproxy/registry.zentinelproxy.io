@@ -10,6 +10,8 @@ name = "lua"
 version = "0.3.0"
 repository = "zentinelproxy/zentinel-agent-lua"
 binary_name = "zentinel-lua-agent"
+install_cmd = "zentinel bundle install lua"
+protocol_version = "v2"
 description = "Embed custom Lua scripts for flexible request/response processing and header manipulation."
 author = "Zentinel Core Team"
 license = "Apache-2.0"
@@ -20,7 +22,6 @@ min_zentinel_version = "26.01.0"
 official = true
 author_url = "https://github.com/zentinelproxy"
 homepage = "https://zentinelproxy.io/agents/lua/"
-crate_name = "zentinel-agent-lua"
 bundle_included = true
 bundle_group = "Scripting agents"
 language = "Rust"
@@ -65,17 +66,19 @@ The bundle command automatically downloads the correct binary for your platform 
 
 ### From Source
 
-```bash
-cargo install zentinel-agent-lua
-```
+`zentinel-agent-lua` is not published on crates.io, and it depends on
+the protocol crate through a path dependency, so neither `cargo install`
+nor `cargo install --git` works. Build it with the
+[zentinel](https://github.com/zentinelproxy/zentinel) repository checked out
+**next to** it:
 
-Or build manually:
-
 ```bash
+git clone https://github.com/zentinelproxy/zentinel
 git clone https://github.com/zentinelproxy/zentinel-agent-lua
 cd zentinel-agent-lua
 cargo build --release
 ```
+
 
 ## Quick Start
 

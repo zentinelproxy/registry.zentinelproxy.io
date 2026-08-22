@@ -22,5 +22,8 @@ light_theme = "github-light"
 [extra]
 author = "raskell.io"
 github = "https://github.com/zentinelproxy/zentinel"
-discord = "https://discord.gg/jN57RsT2"
-software_version = "26.02"
+# discord = ""  # The previous invite (jN57RsT2) expired — Discord returns
+# "Unknown Invite" (code 10006). The templates guard on this key, so the
+# Discord links are simply hidden while it is unset. Restore by setting a
+# permanent invite (Server Settings -> Invites -> expiry Never).
+software_version = "26.08_1"

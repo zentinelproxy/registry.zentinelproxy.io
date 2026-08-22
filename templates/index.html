@@ -273,9 +273,9 @@
                 <p class="agent-description">{{ page.extra.description | default(value="No description available.") }}</p>
 
                 {# Install methods badges #}
-                {% if page.extra.binary_name %}
+                {% if page.extra.install_cmd %}
                 <div class="agent-install-badges">
-                    <span class="install-badge cargo" title="cargo install {{ page.extra.binary_name }}">
+                    <span class="install-badge cargo" title="{{ page.extra.install_cmd | default(value='See the agent page for install instructions') }}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 16 16"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linejoin="round" stroke-width="1"><path stroke-linecap="round" d="M1.5 7L8 10.5L14.5 7m-10-2.5l3.503 2L14.498 3M4.5 5.5v7m3.5-6V14"/><path stroke-linecap="round" d="M8.003 3L11.5 4.5v8"/><path stroke-linecap="square" d="M1.5 6.984V11l6.503 3.5L14.5 11V3L11 1.5l-6.5 3v1z"/></g></svg>
                         Cargo
                     </span>
@@ -591,7 +591,7 @@
                         <span class="qi-badge">Security</span>
                     </div>
                     <p>OWASP-compatible web application firewall with SQL injection, XSS, and path traversal protection.</p>
-                    <code class="qi-command">cargo install zentinel-agent-waf</code>
+                    <code class="qi-command">zentinel bundle install waf</code>
                 </div>
 
                 <div class="quick-install-card">
@@ -600,7 +600,7 @@
                         <span class="qi-badge">Security</span>
                     </div>
                     <p>Advanced bot detection with browser fingerprinting, behavioral analysis, and CAPTCHA challenges.</p>
-                    <code class="qi-command">cargo install zentinel-agent-bot-management</code>
+                    <code class="qi-command">zentinel bundle install bot-management</code>
                 </div>
 
                 <div class="quick-install-card">
@@ -609,7 +609,7 @@
                         <span class="qi-badge">Traffic</span>
                     </div>
                     <p>Token bucket rate limiting with configurable limits per IP, user, or custom key.</p>
-                    <code class="qi-command">cargo install zentinel-agent-ratelimit</code>
+                    <code class="qi-command">zentinel bundle install ratelimit</code>
                 </div>
 
                 <div class="quick-install-card">
@@ -618,7 +618,7 @@
                         <span class="qi-badge">API Security</span>
                     </div>
                     <p>Secure AI/LLM API endpoints with prompt injection detection, token budgets, and model routing.</p>
-                    <code class="qi-command">cargo install zentinel-agent-ai-gateway</code>
+                    <code class="qi-command">cargo install --git https://github.com/zentinelproxy/zentinel-agent-ai-gateway</code>
                 </div>
 
                 <div class="quick-install-card">
@@ -627,7 +627,7 @@
                         <span class="qi-badge">Identity</span>
                     </div>
                     <p>JWT validation, OAuth 2.0 token introspection, and RBAC enforcement at the edge.</p>
-                    <code class="qi-command">cargo install zentinel-agent-auth</code>
+                    <code class="qi-command">cargo install --git https://github.com/zentinelproxy/zentinel-agent-auth</code>
                 </div>
 
                 <div class="quick-install-card">
@@ -636,7 +636,7 @@
                         <span class="qi-badge">API Security</span>
                     </div>
                     <p>Query depth limiting, cost analysis, and introspection control for GraphQL APIs.</p>
-                    <code class="qi-command">cargo install zentinel-agent-graphql-security</code>
+                    <code class="qi-command">zentinel bundle install graphql-security</code>
                 </div>
             </div>
         </div>

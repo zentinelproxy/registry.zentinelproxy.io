@@ -10,6 +10,8 @@ name = "mqtt-gateway"
 version = "0.4.0"
 repository = "zentinelproxy/zentinel-agent-mqtt-gateway"
 binary_name = "zentinel-mqtt-gateway-agent"
+install_cmd = "zentinel bundle install mqtt-gateway"
+protocol_version = "v2"
 description = "IoT protocol security for MQTT: topic-based ACLs, client authentication, payload inspection, rate limiting, and QoS enforcement."
 author = "Zentinel Core Team"
 license = "Apache-2.0"
@@ -20,7 +22,6 @@ min_zentinel_version = "26.01.0"
 official = true
 author_url = "https://github.com/zentinelproxy"
 homepage = "https://zentinelproxy.io/agents/mqtt-gateway/"
-crate_name = "zentinel-agent-mqtt-gateway"
 bundle_included = true
 bundle_group = "Protocol agents"
 language = "Rust"
@@ -316,17 +317,13 @@ The bundle command automatically downloads the correct binary for your platform 
 
 ### From Source
 
-```bash
-cargo install zentinel-agent-mqtt-gateway
-```
-
-Or build manually:
+`zentinel-agent-mqtt-gateway` is not published on crates.io, so `cargo install
+zentinel-agent-mqtt-gateway` does not work. Install from the repository instead:
 
 ```bash
-git clone https://github.com/zentinelproxy/zentinel-agent-mqtt-gateway
-cd zentinel-agent-mqtt-gateway
-cargo build --release
+cargo install --git https://github.com/zentinelproxy/zentinel-agent-mqtt-gateway
 ```
+
 
 ## Quick Start
 
