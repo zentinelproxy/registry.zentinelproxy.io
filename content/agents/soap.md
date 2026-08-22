@@ -10,6 +10,8 @@ name = "soap"
 version = "0.4.0"
 repository = "zentinelproxy/zentinel-agent-soap"
 binary_name = "zentinel-soap-agent"
+install_cmd = "zentinel bundle install soap"
+protocol_version = "v2"
 description = "SOAP-specific security controls including envelope validation, WS-Security verification, operation control, and XXE prevention."
 author = "Zentinel Core Team"
 license = "Apache-2.0"
@@ -20,7 +22,6 @@ min_zentinel_version = "26.01.0"
 official = true
 author_url = "https://github.com/zentinelproxy"
 homepage = "https://zentinelproxy.io/agents/soap/"
-crate_name = "zentinel-agent-soap"
 bundle_included = true
 bundle_group = "API security agents"
 language = "Rust"
@@ -65,17 +66,13 @@ The bundle command automatically downloads the correct binary for your platform 
 
 ### From Source
 
-```bash
-cargo install zentinel-agent-soap
-```
-
-Or build manually:
+`zentinel-agent-soap` is not published on crates.io, so `cargo install
+zentinel-agent-soap` does not work. Install from the repository instead:
 
 ```bash
-git clone https://github.com/zentinelproxy/zentinel-agent-soap
-cd zentinel-agent-soap
-cargo build --release
+cargo install --git https://github.com/zentinelproxy/zentinel-agent-soap
 ```
+
 
 ## Configuration
 

@@ -10,6 +10,8 @@ name = "mock-server"
 version = "0.4.0"
 repository = "zentinelproxy/zentinel-agent-mock-server"
 binary_name = "zentinel-mock-server-agent"
+install_cmd = "zentinel bundle install mock-server"
+protocol_version = "v2"
 description = "A mock server agent that intercepts requests and returns configurable stub responses with support for templating, latency simulation, and fault injection."
 author = "Zentinel Core Team"
 license = "Apache-2.0"
@@ -20,7 +22,6 @@ min_zentinel_version = "26.01.0"
 official = true
 author_url = "https://github.com/zentinelproxy"
 homepage = "https://zentinelproxy.io/agents/mock-server/"
-crate_name = "zentinel-agent-mock-server"
 bundle_included = true
 bundle_group = "Utility agents"
 language = "Rust"
@@ -66,17 +67,19 @@ The bundle command automatically downloads the correct binary for your platform 
 
 ### From Source
 
-```bash
-cargo install zentinel-agent-mock-server
-```
+`zentinel-agent-mock-server` is not published on crates.io, and it depends on
+the protocol crate through a path dependency, so neither `cargo install`
+nor `cargo install --git` works. Build it with the
+[zentinel](https://github.com/zentinelproxy/zentinel) repository checked out
+**next to** it:
 
-Or build manually:
-
 ```bash
+git clone https://github.com/zentinelproxy/zentinel
 git clone https://github.com/zentinelproxy/zentinel-agent-mock-server
 cd zentinel-agent-mock-server
 cargo build --release
 ```
+
 
 ## Quick Start
 

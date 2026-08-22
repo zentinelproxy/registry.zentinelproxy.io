@@ -10,6 +10,8 @@ name = "modsec"
 version = "0.3.0"
 repository = "zentinelproxy/zentinel-agent-modsec"
 binary_name = "zentinel-modsec-agent"
+install_cmd = "zentinel bundle install modsec"
+protocol_version = "v2"
 description = "Full OWASP Core Rule Set (CRS) support via libmodsecurity with 800+ detection rules."
 author = "Zentinel Core Team"
 license = "Apache-2.0"
@@ -20,7 +22,6 @@ min_zentinel_version = "26.01.0"
 official = true
 author_url = "https://github.com/zentinelproxy"
 homepage = "https://zentinelproxy.io/agents/modsec/"
-crate_name = "zentinel-agent-modsec"
 bundle_included = true
 bundle_group = "Security agents"
 language = "Rust"
@@ -80,17 +81,13 @@ The bundle command automatically downloads the correct binary for your platform 
 
 ### From Source
 
-```bash
-cargo install zentinel-agent-modsec
-```
-
-Or build manually:
+`zentinel-agent-modsec` is not published on crates.io, so `cargo install
+zentinel-agent-modsec` does not work. Install from the repository instead:
 
 ```bash
-git clone https://github.com/zentinelproxy/zentinel-agent-modsec
-cd zentinel-agent-modsec
-cargo build --release
+cargo install --git https://github.com/zentinelproxy/zentinel-agent-modsec
 ```
+
 
 ## Configuration
 

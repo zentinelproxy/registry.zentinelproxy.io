@@ -10,6 +10,8 @@ name = "spiffe"
 version = "0.3.0"
 repository = "zentinelproxy/zentinel-agent-spiffe"
 binary_name = "zentinel-spiffe-agent"
+install_cmd = "zentinel bundle install spiffe"
+protocol_version = "v2"
 description = "SPIFFE/SPIRE workload identity authentication agent for zero-trust service-to-service communication."
 author = "Zentinel Core Team"
 license = "Apache-2.0"
@@ -20,7 +22,6 @@ min_zentinel_version = "26.01.0"
 official = true
 author_url = "https://github.com/zentinelproxy"
 homepage = "https://zentinelproxy.io/agents/spiffe/"
-crate_name = "zentinel-agent-spiffe"
 bundle_included = true
 bundle_group = "Identity agents"
 language = "Rust"
@@ -76,17 +77,13 @@ The bundle command automatically downloads the correct binary for your platform 
 
 ### From Source
 
-```bash
-cargo install zentinel-agent-spiffe
-```
-
-Or build manually:
+`zentinel-agent-spiffe` is not published on crates.io, so `cargo install
+zentinel-agent-spiffe` does not work. Install from the repository instead:
 
 ```bash
-git clone https://github.com/zentinelproxy/zentinel-agent-spiffe
-cd zentinel-agent-spiffe
-cargo build --release
+cargo install --git https://github.com/zentinelproxy/zentinel-agent-spiffe
 ```
+
 
 ## Quick Start
 

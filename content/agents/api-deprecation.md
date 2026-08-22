@@ -10,6 +10,8 @@ name = "api-deprecation"
 version = "0.4.0"
 repository = "zentinelproxy/zentinel-agent-api-deprecation"
 binary_name = "zentinel-api-deprecation-agent"
+install_cmd = "zentinel bundle install api-deprecation"
+protocol_version = "v2"
 description = "API lifecycle management agent with RFC 8594 Sunset headers, usage tracking, automatic redirects, and migration support for graceful API deprecation."
 author = "Zentinel Core Team"
 license = "Apache-2.0"
@@ -20,7 +22,6 @@ min_zentinel_version = "26.01.0"
 official = true
 author_url = "https://github.com/zentinelproxy"
 homepage = "https://zentinelproxy.io/agents/api-deprecation/"
-crate_name = "zentinel-agent-api-deprecation"
 bundle_included = true
 bundle_group = "API security agents"
 language = "Rust"
@@ -67,17 +68,19 @@ The bundle command automatically downloads the correct binary for your platform 
 
 ### From Source
 
-```bash
-cargo install zentinel-agent-api-deprecation
-```
+`zentinel-agent-api-deprecation` is not published on crates.io, and it depends on
+the protocol crate through a path dependency, so neither `cargo install`
+nor `cargo install --git` works. Build it with the
+[zentinel](https://github.com/zentinelproxy/zentinel) repository checked out
+**next to** it:
 
-Or build manually:
-
 ```bash
+git clone https://github.com/zentinelproxy/zentinel
 git clone https://github.com/zentinelproxy/zentinel-agent-api-deprecation
 cd zentinel-agent-api-deprecation
 cargo build --release
 ```
+
 
 ## Configuration
 

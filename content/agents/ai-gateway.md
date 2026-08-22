@@ -10,6 +10,8 @@ name = "ai-gateway"
 version = "0.2.0"
 repository = "zentinelproxy/zentinel-agent-ai-gateway"
 binary_name = "zentinel-ai-gateway-agent"
+install_cmd = "cargo install --git https://github.com/zentinelproxy/zentinel-agent-ai-gateway"
+protocol_version = "v2"
 description = "Pattern-based security for AI APIs: prompt injection detection, jailbreak prevention, PII detection, and schema validation for LLM traffic."
 author = "Zentinel Core Team"
 license = "Apache-2.0"
@@ -20,8 +22,7 @@ min_zentinel_version = "26.01.0"
 official = true
 author_url = "https://github.com/zentinelproxy"
 homepage = "https://zentinelproxy.io/agents/ai-gateway/"
-crate_name = "zentinel-agent-ai-gateway"
-bundle_included = true
+bundle_included = false
 bundle_group = "API security agents"
 language = "Rust"
 +++
@@ -96,29 +97,19 @@ Analyze and filter LLM responses before they reach the client:
 
 ## Installation
 
-### Using Bundle (Recommended)
+### Using Bundle
 
-The easiest way to install this agent is via the Zentinel bundle command:
-
-```bash
-zentinel bundle install ai-gateway
-```
-
-The bundle command automatically downloads the correct binary for your platform and places it in `~/.zentinel/agents/`.
+**Not available for this agent.** It is not part of the distribution bundle, so `zentinel bundle install` cannot fetch it. Build it from source as below.
 
 ### From Source
 
-```bash
-cargo install zentinel-agent-ai-gateway
-```
-
-Or build manually:
+`zentinel-agent-ai-gateway` is not published on crates.io, so `cargo install
+zentinel-agent-ai-gateway` does not work. Install from the repository instead:
 
 ```bash
-git clone https://github.com/zentinelproxy/zentinel-agent-ai-gateway
-cd zentinel-agent-ai-gateway
-cargo build --release
+cargo install --git https://github.com/zentinelproxy/zentinel-agent-ai-gateway
 ```
+
 
 ## Configuration
 

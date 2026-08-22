@@ -10,6 +10,8 @@ name = "bot-management"
 version = "0.4.0"
 repository = "zentinelproxy/zentinel-agent-bot-management"
 binary_name = "zentinel-bot-management-agent"
+install_cmd = "zentinel bundle install bot-management"
+protocol_version = "v2"
 description = "Comprehensive bot detection with multi-signal analysis, known bot verification, and behavioral tracking."
 author = "Zentinel Core Team"
 license = "Apache-2.0"
@@ -20,7 +22,6 @@ min_zentinel_version = "26.01.0"
 official = true
 author_url = "https://github.com/zentinelproxy"
 homepage = "https://zentinelproxy.io/agents/bot-management/"
-crate_name = "zentinel-agent-bot-management"
 bundle_included = true
 bundle_group = "Security agents"
 language = "Rust"
@@ -64,17 +65,19 @@ The bundle command automatically downloads the correct binary for your platform 
 
 ### From Source
 
-```bash
-cargo install zentinel-agent-bot-management
-```
+`zentinel-agent-bot-management` is not published on crates.io, and it depends on
+the protocol crate through a path dependency, so neither `cargo install`
+nor `cargo install --git` works. Build it with the
+[zentinel](https://github.com/zentinelproxy/zentinel) repository checked out
+**next to** it:
 
-Or build manually:
-
 ```bash
+git clone https://github.com/zentinelproxy/zentinel
 git clone https://github.com/zentinelproxy/zentinel-agent-bot-management
 cd zentinel-agent-bot-management
 cargo build --release
 ```
+
 
 ## Configuration
 

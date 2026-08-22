@@ -10,6 +10,8 @@ name = "content-scanner"
 version = "0.4.0"
 repository = "zentinelproxy/zentinel-agent-content-scanner"
 binary_name = "zentinel-content-scanner-agent"
+install_cmd = "zentinel bundle install content-scanner"
+protocol_version = "v2"
 description = "Malware scanning agent using ClamAV daemon for file upload protection"
 author = "Zentinel Core Team"
 license = "Apache-2.0"
@@ -20,7 +22,6 @@ min_zentinel_version = "26.01.0"
 official = true
 author_url = "https://github.com/zentinelproxy"
 homepage = "https://zentinelproxy.io/agents/content-scanner/"
-crate_name = "zentinel-agent-content-scanner"
 bundle_included = true
 bundle_group = "Security agents"
 language = "Rust"
@@ -68,17 +69,13 @@ The bundle command automatically downloads the correct binary for your platform 
 
 ### From Source
 
-```bash
-cargo install zentinel-agent-content-scanner
-```
-
-Or build manually:
+`zentinel-agent-content-scanner` is not published on crates.io, so `cargo install
+zentinel-agent-content-scanner` does not work. Install from the repository instead:
 
 ```bash
-git clone https://github.com/zentinelproxy/zentinel-agent-content-scanner
-cd zentinel-agent-content-scanner
-cargo build --release
+cargo install --git https://github.com/zentinelproxy/zentinel-agent-content-scanner
 ```
+
 
 ### ClamAV Setup
 

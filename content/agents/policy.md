@@ -10,6 +10,7 @@ name = "policy"
 version = "0.1.0"
 repository = "zentinelproxy/zentinel-agent-policy"
 binary_name = "zentinel-policy-agent"
+protocol_version = "v2"
 description = "Multi-language policy evaluation agent supporting Cedar and Rego/OPA for fine-grained authorization decisions."
 author = "Zentinel Core Team"
 license = "Apache-2.0"
@@ -20,7 +21,7 @@ min_zentinel_version = "26.01.0"
 official = true
 author_url = "https://github.com/zentinelproxy"
 homepage = "https://zentinelproxy.io/agents/policy/"
-bundle_included = true
+bundle_included = false
 bundle_group = "Identity agents"
 language = "Haskell"
 +++
@@ -81,23 +82,14 @@ chmod +x opa && sudo mv opa /usr/local/bin/
 
 ## Installation
 
-### Using Bundle (Recommended)
+### Using Bundle
 
-The easiest way to install this agent is via the Zentinel bundle command:
-
-```bash
-zentinel bundle install policy
-```
-
-The bundle command automatically downloads the correct binary for your platform and places it in `~/.zentinel/agents/`.
+**Not available for this agent.** It is not part of the distribution bundle, so `zentinel bundle install` cannot fetch it. Build it from source as below.
 
 ### From Source
 
-```bash
-cabal install zentinel-agent-policy
-```
-
-Or build manually:
+This agent is written in Haskell, not Rust. It is not published on Hackage, so
+`cabal install zentinel-agent-policy` does not work — build it from a checkout:
 
 ```bash
 git clone https://github.com/zentinelproxy/zentinel-agent-policy

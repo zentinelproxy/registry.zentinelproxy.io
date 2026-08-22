@@ -10,6 +10,8 @@ name = "wasm"
 version = "0.3.0"
 repository = "zentinelproxy/zentinel-agent-wasm"
 binary_name = "zentinel-wasm-agent"
+install_cmd = "zentinel bundle install wasm"
+protocol_version = "v2"
 description = "Execute custom Wasm modules for high-performance request/response processing in any language."
 author = "Zentinel Core Team"
 license = "Apache-2.0"
@@ -20,7 +22,6 @@ min_zentinel_version = "26.01.0"
 official = true
 author_url = "https://github.com/zentinelproxy"
 homepage = "https://zentinelproxy.io/agents/wasm/"
-crate_name = "zentinel-agent-wasm"
 bundle_included = true
 bundle_group = "Scripting agents"
 language = "Rust"
@@ -64,17 +65,13 @@ The bundle command automatically downloads the correct binary for your platform 
 
 ### From Source
 
-```bash
-cargo install zentinel-agent-wasm
-```
-
-Or build manually:
+`zentinel-agent-wasm` is not published on crates.io, so `cargo install
+zentinel-agent-wasm` does not work. Install from the repository instead:
 
 ```bash
-git clone https://github.com/zentinelproxy/zentinel-agent-wasm
-cd zentinel-agent-wasm
-cargo build --release
+cargo install --git https://github.com/zentinelproxy/zentinel-agent-wasm
 ```
+
 
 ## Configuration
 

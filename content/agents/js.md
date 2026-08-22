@@ -10,6 +10,8 @@ name = "js"
 version = "0.3.0"
 repository = "zentinelproxy/zentinel-agent-js"
 binary_name = "zentinel-js-agent"
+install_cmd = "zentinel bundle install js"
+protocol_version = "v2"
 description = "Write custom request/response processing logic in JavaScript using the QuickJS engine."
 author = "Zentinel Core Team"
 license = "Apache-2.0"
@@ -20,7 +22,6 @@ min_zentinel_version = "26.01.0"
 official = true
 author_url = "https://github.com/zentinelproxy"
 homepage = "https://zentinelproxy.io/agents/js/"
-crate_name = "zentinel-agent-js"
 bundle_included = true
 bundle_group = "Scripting agents"
 language = "Rust"
@@ -64,17 +65,13 @@ The bundle command automatically downloads the correct binary for your platform 
 
 ### From Source
 
-```bash
-cargo install zentinel-agent-js
-```
-
-Or build manually:
+`zentinel-agent-js` is not published on crates.io, so `cargo install
+zentinel-agent-js` does not work. Install from the repository instead:
 
 ```bash
-git clone https://github.com/zentinelproxy/zentinel-agent-js
-cd zentinel-agent-js
-cargo build --release
+cargo install --git https://github.com/zentinelproxy/zentinel-agent-js
 ```
+
 
 ## Configuration
 

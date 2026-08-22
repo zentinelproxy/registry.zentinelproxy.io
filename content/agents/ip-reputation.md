@@ -10,6 +10,8 @@ name = "ip-reputation"
 version = "0.4.0"
 repository = "zentinelproxy/zentinel-agent-ip-reputation"
 binary_name = "zentinel-ip-reputation-agent"
+install_cmd = "zentinel bundle install ip-reputation"
+protocol_version = "v2"
 description = "IP threat intelligence with AbuseIPDB integration, file-based blocklists, and Tor exit node detection."
 author = "Zentinel Core Team"
 license = "MIT"
@@ -20,7 +22,6 @@ min_zentinel_version = "26.01.0"
 official = true
 author_url = "https://github.com/zentinelproxy"
 homepage = "https://zentinelproxy.io/agents/ip-reputation/"
-crate_name = "zentinel-agent-ip-reputation"
 bundle_included = true
 bundle_group = "Security agents"
 language = "Rust"
@@ -166,17 +167,19 @@ The bundle command automatically downloads the correct binary for your platform 
 
 ### From Source
 
-```bash
-cargo install zentinel-agent-ip-reputation
-```
+`zentinel-agent-ip-reputation` is not published on crates.io, and it depends on
+the protocol crate through a path dependency, so neither `cargo install`
+nor `cargo install --git` works. Build it with the
+[zentinel](https://github.com/zentinelproxy/zentinel) repository checked out
+**next to** it:
 
-Or build manually:
-
 ```bash
-git clone https://github.com/zentinelproxy/zentinel-agent-ip-reputation.git
+git clone https://github.com/zentinelproxy/zentinel
+git clone https://github.com/zentinelproxy/zentinel-agent-ip-reputation
 cd zentinel-agent-ip-reputation
 cargo build --release
 ```
+
 
 ## Configuration
 
