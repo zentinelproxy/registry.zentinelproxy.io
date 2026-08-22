@@ -54,34 +54,34 @@ ZentinelSec is a pure Rust ModSecurity-compatible WAF agent for Zentinel. It pro
 - **Block or Detect-Only Mode**: Monitor before blocking
 - **Zero Installation Hassle**: Just `cargo install`, no system dependencies
 
-## Performance: 4-13x Faster than C++
+## Performance: 4-11x Faster than C++
 
-ZentinelSec uses the [zentinel-modsec](https://docs.zentinelproxy.io/zentinel-modsec/) engine, a pure Rust implementation that **outperforms the C++ libmodsecurity by 4-13x**, depending on workload.
+ZentinelSec uses the [zentinel-modsec](https://docs.zentinelproxy.io/zentinel-modsec/) engine, a pure Rust implementation that **outperforms the C++ libmodsecurity by 4-11x**, depending on workload.
 
 <div class="stats-grid">
     <div class="stat-card">
-        <div class="stat-value stat-value--success">4.4x</div>
+        <div class="stat-value stat-value--success">4.2x</div>
         <div class="stat-label">Faster</div>
         <div class="stat-detail">Clean requests</div>
     </div>
     <div class="stat-card">
-        <div class="stat-value stat-value--success">12.9x</div>
+        <div class="stat-value stat-value--success">11.5x</div>
         <div class="stat-label">Faster</div>
         <div class="stat-detail">Attack detection</div>
     </div>
     <div class="stat-card">
-        <div class="stat-value stat-value--success">797K</div>
+        <div class="stat-value stat-value--success">676K</div>
         <div class="stat-label">Requests/sec</div>
-        <div class="stat-detail">vs 177K for libmodsec</div>
+        <div class="stat-detail">vs 168K for libmodsec</div>
     </div>
 </div>
 
 | Benchmark | ZentinelSec (Rust) | libmodsecurity (C++) | Speedup |
 |-----------|--------------------|-----------------------|---------|
-| Clean request | 1.20 µs | 5.31 µs | **4.4x faster** |
-| SQLi detection | 1.15 µs | 14.90 µs | **12.9x faster** |
-| Body processing | 1.29 µs | 12.11 µs | **9.4x faster** |
-| Rule parsing | 2.58 µs | 10.20 µs | **4.0x faster** |
+| Clean request | 1.34 µs | 5.65 µs | **4.2x faster** |
+| SQLi detection | 1.40 µs | 16.03 µs | **11.5x faster** |
+| Body processing | 1.45 µs | 12.91 µs | **8.9x faster** |
+| Rule parsing | 2.73 µs | 10.58 µs | **3.9x faster** |
 
 **Why is Rust faster?**
 - Zero-copy parsing with `Cow<str>`
@@ -106,7 +106,7 @@ See [full benchmarks](/benchmarks/#rust-vs-c-zentinel-modsec-vs-libmodsecurity) 
 | Anomaly Scoring | Via CRS | Via CRS | Built-in |
 | API Security | No | No | GraphQL, JWT, Schema |
 | Dependencies | **Pure Rust** | libmodsecurity (C) | Pure Rust |
-| Performance | **797K req/s** | 177K req/s | 1.6M req/s |
+| Performance | **676K req/s** | 168K req/s | 1.6M req/s |
 | Binary Size | ~10MB | ~50MB | ~5MB |
 | Installation | `zentinel bundle install zentinelsec` | Requires libmodsecurity | `zentinel bundle install waf` |
 
