@@ -73,7 +73,7 @@ The easiest way to install this agent is via the Zentinel bundle command:
 zentinel bundle install spiffe
 ```
 
-The bundle command automatically downloads the correct binary for your platform and places it in `~/.zentinel/agents/`.
+The bundle command downloads the correct binary for your platform and installs it to `~/.local/bin`, with its configuration in `~/.config/zentinel/agents/`. Run as root, or with a writable `/usr/local/bin` and `/etc`, it installs system-wide instead.
 
 ### From Source
 
