@@ -35,7 +35,7 @@ AI Gateway provides **pattern-based security controls** for AI API traffic (Open
 
 ### Built-in vs Agent Features
 
-Zentinel v26.01 includes [built-in inference support](/configuration/inference/) for token-based rate limiting, cost tracking, and model routing. This agent focuses on **pattern-based guardrails** that analyze prompt content:
+Zentinel v26.01 includes [built-in inference support](https://docs.zentinelproxy.io/examples/inference-routing/) for token-based rate limiting, cost tracking, and model routing. This agent focuses on **pattern-based guardrails** that analyze prompt content:
 
 | Feature | Built-in | Agent |
 |---------|----------|-------|

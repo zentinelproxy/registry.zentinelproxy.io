@@ -33,7 +33,7 @@ language = "Rust"
 
 **This agent is deprecated as of Zentinel v26.01.** Rate limiting is now built into Zentinel core with more features and better performance.
 
-Please use [Zentinel's built-in rate limiting](/configuration/limits/) instead.
+Please use [Zentinel's built-in rate limiting](https://docs.zentinelproxy.io/configuration/limits/) instead.
 
 </div>
 
@@ -153,8 +153,8 @@ namespace "tenant-a" {
 
 For complete documentation on built-in rate limiting, see:
 
-- [Rate Limiting Configuration](/configuration/limits/)
-- [Features: Rate Limiting](/features/#rate-limiting)
+- [Rate Limiting Configuration](https://docs.zentinelproxy.io/configuration/limits/)
+- [Features: Rate Limiting](https://docs.zentinelproxy.io/features/#rate-limiting)
 
 ---
 

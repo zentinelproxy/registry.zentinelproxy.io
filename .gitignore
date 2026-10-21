@@ -1,1 +1,4 @@
 public/
+
+# Written by zola 0.22 builds; the site styles highlighting in sass/_syntax.scss
+static/giallo-*.css

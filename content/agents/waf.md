@@ -758,4 +758,4 @@ pub trait WafPlugin: Send + Sync {
 | [AI Gateway](/agents/ai-gateway/) | AI/LLM-specific security controls |
 | [Auth](/agents/auth/) | Authentication and authorization |
 
-> **Tip:** For rate limiting, use [Zentinel's built-in rate limiting](/configuration/limits/) instead of an agent.
+> **Tip:** For rate limiting, use [Zentinel's built-in rate limiting](https://docs.zentinelproxy.io/configuration/limits/) instead of an agent.

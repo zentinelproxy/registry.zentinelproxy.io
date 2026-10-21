@@ -223,4 +223,4 @@ SecAction "id:900000,phase:1,pass,t:none,nolog,setvar:tx.blocking_paranoia_level
 | **AI Gateway** | AI-specific security controls |
 | **Auth** | Combine with authentication |
 
-> **Note:** For rate limiting, use [Zentinel's built-in rate limiting](/configuration/limits/) instead of an agent.
+> **Note:** For rate limiting, use [Zentinel's built-in rate limiting](https://docs.zentinelproxy.io/configuration/limits/) instead of an agent.

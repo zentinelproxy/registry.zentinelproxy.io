@@ -1,0 +1,29 @@
+{#- Status badge: text plus an icon, coloured by the status token. The shape
+    differs per state too, so colour is never the only signal. -#}
+{% macro status_badge(status) %}
+{%- if status == "stable" -%}
+<span class="badge badge--status badge--success"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Stable</span>
+{%- elif status == "beta" -%}
+<span class="badge badge--status badge--warn"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h6M10 3v6L4.5 18.5A1.7 1.7 0 0 0 6 21h12a1.7 1.7 0 0 0 1.5-2.5L14 9V3"/></svg>Beta</span>
+{%- elif status == "deprecated" -%}
+<span class="badge badge--status badge--danger"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/></svg>Deprecated</span>
+{%- else -%}
+<span class="badge badge--status">{{ status }}</span>
+{%- endif -%}
+{% endmacro status_badge %}
+
+{% macro protocol_badge(version) %}
+<span class="badge badge--protocol" title="Speaks agent protocol {{ version }}">Protocol {{ version }}</span>
+{%- endmacro protocol_badge %}
+
+{% macro category_label(category) %}
+{%- if category == "api-security" -%}API Security
+{%- elif category == "core" -%}Core
+{%- elif category == "security" -%}Security
+{%- elif category == "protocol" -%}Protocol
+{%- elif category == "scripting" -%}Scripting
+{%- elif category == "utility" -%}Utility
+{%- elif category == "identity" -%}Identity
+{%- else -%}{{ category }}
+{%- endif -%}
+{% endmacro category_label %}
