@@ -518,4 +518,4 @@ agent "denylist" {
 | **WAF** | Combine with attack detection |
 | **ModSecurity** | Full WAF with IP reputation |
 
-> **Note:** For country-level blocking, use [Zentinel's built-in GeoIP filtering](/configuration/geoip/) instead.
+> **Note:** For country-level blocking, use [Zentinel's built-in GeoIP filtering](https://docs.zentinelproxy.io/configuration/filters/#geoip-filter) instead.

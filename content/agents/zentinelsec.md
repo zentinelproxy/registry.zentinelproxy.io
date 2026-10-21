@@ -94,7 +94,7 @@ ZentinelSec uses the [zentinel-modsec](https://docs.zentinelproxy.io/zentinel-mo
 >
 > These figures were revised downward in August 2026. The earlier numbers came from a benchmark whose measured section never executed the detection rules — see [zentinel-modsec#15](https://github.com/zentinelproxy/zentinel-modsec/issues/15) and the fix in [#16](https://github.com/zentinelproxy/zentinel-modsec/pull/16).
 
-See [full benchmarks](/benchmarks/#rust-vs-c-zentinel-modsec-vs-libmodsecurity) for details.
+See [full benchmarks](https://zentinelproxy.io/benchmarks/#rust-vs-c-zentinel-modsec-vs-libmodsecurity) for details.
 
 ## Comparison
 

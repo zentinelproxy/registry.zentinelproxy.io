@@ -45,7 +45,7 @@ WebSocket Inspector provides **content-level security analysis** for WebSocket c
 
 ### How It Works with Zentinel
 
-Zentinel v26.01 includes [native WebSocket support](/features/#websocket) that handles:
+Zentinel v26.01 includes [native WebSocket support](https://docs.zentinelproxy.io/features/#websocket) that handles:
 - RFC 6455 compliant connection upgrades
 - Frame parsing and encoding
 - Frame masking/unmasking
